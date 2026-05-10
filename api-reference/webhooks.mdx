@@ -1,0 +1,153 @@
+---
+title: "Webhooks: receive real-time events from Io Ai"
+description: "Register webhook endpoints to receive real-time event payloads from Io Ai. Covers setup, event types, signature verification, and retry behavior."
+---
+
+Webhooks let your application react to changes in Io Ai in real time. When an event occurs — such as a document being published or a collaborator being added — Io Ai sends an HTTP POST request with a JSON payload to a URL you register. This page explains how to register a webhook, what events are available, how to verify that requests are genuine, and how retries work.
+
+<Warning>
+Always verify the signature of incoming webhook requests before processing them. Without signature verification, a malicious actor could send forged payloads to your endpoint.
+</Warning>
+
+---
+
+## Setting up a webhook endpoint
+
+<Steps>
+  <Step title="Build a public HTTPS endpoint">
+    Create an endpoint on your server that accepts `POST` requests and returns a `2xx` HTTP status code to acknowledge receipt. The endpoint must be reachable from the internet over HTTPS.
+  </Step>
+  <Step title="Register the endpoint with Io Ai">
+    Call `POST /webhooks` with your endpoint URL and the list of events you want to subscribe to:
+
+    ```bash
+    curl -X POST "https://api.io-oi.ai/v1/webhooks" \
+      -H "Authorization: Bearer YOUR_API_KEY" \
+      -H "Content-Type: application/json" \
+      -d '{
+        "url": "https://your-app.example.com/webhooks/io-ai",
+        "events": ["document.published", "document.updated"]
+      }'
+    ```
+
+    The response includes a `secret` field. Store this value securely — you will use it to verify signatures.
+  </Step>
+  <Step title="Store the webhook secret">
+    Copy the `secret` from the registration response and store it as an environment variable (for example, `IO_AI_WEBHOOK_SECRET`). It is shown only once.
+  </Step>
+  <Step title="Verify signatures on incoming requests">
+    For every incoming webhook, compute an HMAC-SHA256 signature of the raw request body using your secret and compare it to the value in the `X-IoAi-Signature` header. See [Verifying signatures](#verifying-signatures) below for a code example.
+  </Step>
+</Steps>
+
+---
+
+## Webhook events
+
+Io Ai sends the following event types:
+
+| Event | Triggered when |
+|-------|---------------|
+| `document.published` | A document is published or republished. |
+| `document.updated` | A document's content or metadata is updated. |
+| `document.deleted` | A document is permanently deleted. |
+| `project.published` | A project is published (all eligible documents made public). |
+| `collaborator.added` | A new collaborator is added to a project. |
+
+---
+
+## Webhook payload format
+
+Each webhook request body is a JSON object with three top-level fields:
+
+```json
+{
+  "event": "document.published",
+  "timestamp": "2026-05-10T12:00:00Z",
+  "data": {
+    "id": "doc_xyz789",
+    "title": "Getting started",
+    "project_id": "proj_abc123",
+    "url": "https://docs.example.com/getting-started",
+    "published_at": "2026-05-10T12:00:00Z"
+  }
+}
+```
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `event` | string | The event type (e.g., `document.published`). |
+| `timestamp` | string | ISO 8601 timestamp of when the event occurred. |
+| `data` | object | Event-specific payload. Fields vary by event type. |
+
+---
+
+## Verifying signatures
+
+Io Ai signs every webhook request with an HMAC-SHA256 digest of the raw request body, using the secret generated when you registered your endpoint. The signature is included in the `X-IoAi-Signature` request header, prefixed with `sha256=`.
+
+Verify the signature in your handler before processing any event. The following Node.js example shows how:
+
+```javascript
+const crypto = require("crypto");
+
+function verifyWebhookSignature(req, secret) {
+  const signature = req.headers["x-ioai-signature"];
+  if (!signature) {
+    throw new Error("Missing X-IoAi-Signature header");
+  }
+
+  // Use the raw request body bytes, not a parsed object
+  const rawBody = req.rawBody;
+
+  const expectedSignature =
+    "sha256=" +
+    crypto
+      .createHmac("sha256", secret)
+      .update(rawBody)
+      .digest("hex");
+
+  const sigBuffer = Buffer.from(signature);
+  const expectedBuffer = Buffer.from(expectedSignature);
+
+  if (
+    sigBuffer.length !== expectedBuffer.length ||
+    !crypto.timingSafeEqual(sigBuffer, expectedBuffer)
+  ) {
+    throw new Error("Webhook signature verification failed");
+  }
+
+  return true;
+}
+```
+
+<Tip>
+Use `crypto.timingSafeEqual` (or an equivalent constant-time comparison) to prevent timing attacks when comparing signature strings.
+</Tip>
+
+---
+
+## Retry behavior
+
+If your endpoint returns a non-`2xx` HTTP status code, or if the request times out (after 10 seconds), Io Ai will retry the delivery up to **3 times** using exponential backoff:
+
+| Attempt | Delay before retry |
+|---------|-------------------|
+| 1st retry | 1 minute |
+| 2nd retry | 5 minutes |
+| 3rd retry | 30 minutes |
+
+After three failed retries, the delivery is marked as failed and no further attempts are made. You can view delivery history and failed events in the **Settings → Webhooks** section of your dashboard.
+
+---
+
+## Deleting a webhook
+
+To stop receiving events on a registered endpoint, delete the webhook by its ID:
+
+```bash
+curl -X DELETE "https://api.io-oi.ai/v1/webhooks/wh_123abc" \
+  -H "Authorization: Bearer YOUR_API_KEY"
+```
+
+Returns `204 No Content` on success. Event delivery to the endpoint stops immediately.

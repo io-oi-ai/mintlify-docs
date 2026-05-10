@@ -1,0 +1,106 @@
+---
+title: "Connect Io Ai to GitHub, Slack, and other tools"
+description: "Set up integrations with GitHub, Slack, Zapier, webhooks, and SSO to automate your documentation workflow and keep your team in sync."
+---
+
+Io Ai connects to the tools your team already uses so your documentation workflow stays in one place. You can sync docs to a GitHub repository, post Slack notifications when content is published, trigger automations through Zapier or custom webhooks, and let team members sign in with their existing Google or GitHub accounts. All integrations are managed from **Project settings → Integrations**.
+
+<Tip>
+  If you need to connect Io Ai to a tool that is not listed here, use the [Webhooks integration](/api-reference/webhooks) to build a custom automation. Webhooks fire on every publish and update event, giving you full flexibility.
+</Tip>
+
+## GitHub
+
+Connecting a GitHub repository lets you keep your docs in version control, trigger deploys on publish, and preview changes in pull requests before they go live.
+
+<Steps>
+  <Step title="Install the Io Ai GitHub App">
+    Go to **Project settings → Integrations → GitHub** and click **Connect GitHub**. You are redirected to GitHub to install the Io Ai GitHub App. Select the organization or personal account that owns the repository, then grant access to the specific repository you want to use.
+  </Step>
+  <Step title="Choose the sync branch">
+    After installation, return to Io Ai. Select the repository and choose a branch (for example, `main` or `docs`) from the **Sync branch** dropdown. Io Ai reads and writes docs to this branch.
+  </Step>
+  <Step title="Configure sync direction">
+    Choose how changes flow between Io Ai and GitHub:
+
+    - **Io Ai → GitHub**: Every time you publish in Io Ai, the updated file is committed to the sync branch.
+    - **GitHub → Io Ai**: Changes pushed to the sync branch are imported into Io Ai automatically.
+    - **Bidirectional**: Both directions are active. Use this when some teammates prefer editing in code and others prefer the Io Ai editor.
+  </Step>
+  <Step title="Enable commit-on-publish">
+    Toggle **Commit on publish** to automatically create a Git commit every time a document is published. Each commit includes the document title, the author's name, and the publication timestamp in the commit message.
+  </Step>
+  <Step title="Enable pull request previews">
+    Toggle **Pull request previews** to automatically deploy a preview of your docs site for every open pull request that affects docs files. The preview URL is posted as a GitHub status check on the PR.
+  </Step>
+</Steps>
+
+## Slack
+
+The Slack integration sends notifications to a channel of your choice when publishing events occur or when new comments are posted.
+
+<Steps>
+  <Step title="Add the Io Ai Slack app">
+    Go to **Project settings → Integrations → Slack** and click **Connect Slack**. You are redirected to Slack to authorize the Io Ai app for your workspace. Select the workspace and click **Allow**.
+  </Step>
+  <Step title="Choose a notification channel">
+    After authorization, return to Io Ai. Select the Slack channel where notifications should be posted. You can choose any public channel or a private channel that the Io Ai app has been invited to.
+  </Step>
+  <Step title="Select notification events">
+    Choose which events trigger a Slack message:
+
+    - **Document published** — a message is posted whenever a document goes live.
+    - **New comment** — a message is posted whenever a collaborator leaves a comment on any document.
+
+    Toggle each event on or off independently. You can connect multiple channels and configure different events for each.
+  </Step>
+</Steps>
+
+## Zapier and webhooks
+
+Use Zapier or a custom webhook endpoint to trigger automations whenever documents are published or updated in Io Ai.
+
+<Steps>
+  <Step title="Open the webhook settings">
+    Go to **Project settings → Integrations → Webhooks** and click **Add webhook**.
+  </Step>
+  <Step title="Enter your endpoint URL">
+    Paste the URL of your webhook receiver. This can be a Zapier Webhook Trigger URL, a Make (Integromat) webhook, your own server endpoint, or any URL that accepts a POST request.
+  </Step>
+  <Step title="Choose trigger events">
+    Select the events that send a payload to your endpoint:
+
+    - **document.published** — fires when a document is published for the first time or republished after an edit.
+    - **document.updated** — fires when a document is saved as a draft (before publishing).
+
+    You can add multiple webhooks with different endpoints and event combinations.
+  </Step>
+  <Step title="Test the webhook">
+    Click **Send test payload** to fire a sample event to your endpoint immediately. Verify that your receiver processes the payload correctly before saving.
+  </Step>
+</Steps>
+
+For the full webhook payload schema and event reference, see the [Webhooks API reference](/api-reference/webhooks).
+
+## Single Sign-On (SSO)
+
+SSO lets your project members sign in to Io Ai using their existing Google or GitHub credentials, removing the need to manage a separate Io Ai password.
+
+<Note>
+  Enabling SSO is an Owner-only action. Once enabled, all new members who join via invite are required to authenticate through the configured SSO provider.
+</Note>
+
+<Steps>
+  <Step title="Open SSO settings">
+    Go to **Project settings → Integrations → Single Sign-On** and click **Configure SSO**.
+  </Step>
+  <Step title="Select your identity provider">
+    Choose **Google** or **GitHub** as the SSO provider. You can enable both to give members a choice.
+
+    - **Google SSO** — members sign in with any Google account. You can restrict sign-in to a specific Google Workspace domain (for example, `yourcompany.com`) by entering the domain in the **Allowed domain** field.
+    - **GitHub SSO** — members sign in with their GitHub account. You can restrict sign-in to members of a specific GitHub organization by entering the organization slug.
+  </Step>
+  <Step title="Save and notify your team">
+    Click **Save**. Existing members who signed up with an email and password can continue to use their password. New members who join via invite link are prompted to authenticate with the SSO provider you selected.
+  </Step>
+</Steps>

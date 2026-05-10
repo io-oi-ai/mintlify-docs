@@ -1,0 +1,118 @@
+---
+title: "Core concepts: projects, documents, and publishing"
+description: "Understand the building blocks of Io Ai — projects, documents, the AI writing assistant, publishing, collaborator roles, and API keys."
+---
+
+Before you start building with Io Ai, it helps to understand how the main pieces fit together. This page explains each core concept so you can make informed decisions about how to organize your documentation and who can access it.
+
+<AccordionGroup>
+  <Accordion title="Projects" icon="folder-open" defaultOpen={true}>
+    A **project** is the top-level container in Io Ai. Everything — your documents, team members, domain settings, and publishing configuration — lives inside a project.
+
+    Think of a project as a single documentation site. If you have two products, you'll typically create two projects: one for each product's docs. If you have one product with a public user guide and a separate internal runbook, you might create two projects for that as well.
+
+    Each project has:
+
+    - **A unique name and URL** — your docs are published to `your-project.io-oi.ai` by default, or to a custom domain you configure.
+    - **Members** — the people who can access and edit documents inside the project.
+    - **Settings** — visibility (public or private), custom domain, and integrations.
+
+    You can create as many projects as you need from your dashboard.
+  </Accordion>
+
+  <Accordion title="Documents" icon="file-text">
+    A **document** is a single page of content inside a project. Documents are written in Markdown or MDX, which means you can use standard Markdown syntax as well as interactive components like tabs, callout boxes, and code groups.
+
+    Each document has:
+
+    - **A title and a slug** — the slug determines the URL path when the document is published (for example, a document titled "Getting started" might be published at `/getting-started`).
+    - **A draft and a published state** — documents are private by default and only become visible to your audience when you explicitly publish them.
+    - **Version history** — Io Ai records every change to a document so you can review, compare, and restore previous versions at any time.
+
+    <Tip>
+      Keep each document focused on a single topic or task. Shorter, focused pages are easier for readers to find and understand than long, all-in-one references.
+    </Tip>
+  </Accordion>
+
+  <Accordion title="AI assistant" icon="sparkles">
+    The **AI assistant** is Io Ai's built-in writing tool. It drafts, rewrites, and improves content in plain language directly inside the editor — you don't need to switch to a separate tool or copy and paste between windows.
+
+    You can use the AI assistant to:
+
+    - **Draft from scratch** — describe what you want to document and the assistant generates an initial draft for you to review and edit.
+    - **Rewrite existing content** — select any passage and ask the assistant to simplify it, change the tone, or restructure it into steps.
+    - **Improve clarity** — ask the assistant to flag jargon, passive voice, or overly complex sentences and suggest alternatives.
+
+    The assistant does not publish anything automatically. Every suggestion is a draft that you review and accept before it appears in your document.
+
+    <Note>
+      The AI assistant works best with specific instructions. "Rewrite this for a non-technical audience" produces better results than "make this better".
+    </Note>
+  </Accordion>
+
+  <Accordion title="Publishing" icon="globe">
+    **Publishing** is the process of making a document — or an entire project — visible to your audience. Until you publish, all documents are private and only accessible to your project members.
+
+    Publishing in Io Ai works at two levels:
+
+    - **Document publishing** — you publish individual documents from inside the editor. A published document is visible at its public URL; an unpublished document is not.
+    - **Project publishing** — from **Project settings**, you configure where your published docs live. By default, your project is available at `your-project.io-oi.ai`. You can also connect a custom domain so your docs appear at `docs.yourcompany.com` or any subdomain you control.
+
+    You can unpublish a document at any time. Unpublishing removes it from the public URL immediately but preserves its content and history inside your project.
+
+    See the [publishing guide](/guides/publishing) and the [custom domain guide](/configuration/custom-domain) for setup instructions.
+  </Accordion>
+
+  <Accordion title="Collaborators" icon="users">
+    **Collaborators** are the team members you invite to a project. Each collaborator has a role that controls what they can do:
+
+    | Role | What they can do |
+    |------|-----------------|
+    | **Owner** | Full access: create, edit, publish, and delete documents; manage members; change project settings; delete the project. |
+    | **Editor** | Create, edit, and publish documents; invite Viewers. Cannot change project settings or manage Owners. |
+    | **Viewer** | Read all documents in the project, including unpublished drafts. Cannot create or edit content. |
+
+    To invite a collaborator, open **Project settings → Members**, enter their email address, choose a role, and click **Invite**. They receive an email and can join the project as soon as they accept.
+
+    You can change a collaborator's role or remove them from the project at any time from the same **Members** tab.
+  </Accordion>
+
+  <Accordion title="API keys" icon="key">
+    **API keys** are credentials that authenticate your requests to the Io Ai REST API. You use them to create, update, and publish documents programmatically — for example, from a CI/CD pipeline, a script, or an integration with another tool.
+
+    Each API key is tied to your account (not to a specific project). When you make an API request, Io Ai checks that your key has access to the project you're targeting.
+
+    To generate an API key:
+
+    1. Open **Account settings** from the top-right menu.
+    2. Go to the **API keys** tab.
+    3. Click **New API key**, give it a descriptive name, and copy it immediately.
+
+    <Warning>
+      Io Ai only shows you an API key once at creation time. If you lose it, you'll need to revoke the old key and generate a new one. Store your keys in a secure secrets manager, not in source code.
+    </Warning>
+
+    For a full list of available endpoints, see the [API reference](/api-reference/introduction).
+  </Accordion>
+</AccordionGroup>
+
+## How the pieces fit together
+
+A typical Io Ai workflow looks like this: you create a **project**, invite **collaborators**, and then create **documents** inside that project. As you write, the **AI assistant** helps you keep the language clear and consistent. When a document is ready, you **publish** it so your audience can read it. If you want to automate any part of this workflow — for example, creating a new document every time you ship a release — you use your **API key** to interact with the REST API.
+
+## Explore further
+
+<CardGroup cols={2}>
+  <Card title="Quickstart" icon="bolt" href="/quickstart">
+    Follow a step-by-step guide to create and publish your first document.
+  </Card>
+  <Card title="AI writing guide" icon="wand-magic-sparkles" href="/guides/ai-writing">
+    Learn how to get the most out of the AI assistant when drafting and improving content.
+  </Card>
+  <Card title="Collaboration guide" icon="users" href="/guides/collaboration">
+    Set up your team with the right roles and permissions for your workflow.
+  </Card>
+  <Card title="API reference" icon="plug" href="/api-reference/introduction">
+    Explore every endpoint available in the Io Ai REST API.
+  </Card>
+</CardGroup>

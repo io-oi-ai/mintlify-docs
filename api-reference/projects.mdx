@@ -1,0 +1,178 @@
+---
+title: "Projects API: list, retrieve, and create projects"
+description: "List, retrieve, and create Io Ai projects via the REST API. Full parameter and response field reference with curl examples for each endpoint."
+---
+
+Projects are the top-level containers in Io Ai. Each project holds a collection of documents and has its own visibility settings, slug, and optionally a custom domain. The endpoints below let you list your projects, inspect their details, and create new ones programmatically.
+
+---
+
+## List projects
+
+Returns all projects accessible to the authenticated user.
+
+**GET** `/projects`
+
+### Response fields
+
+<ResponseField name="data" type="object[]">
+  Array of project summary objects.
+  <Expandable title="properties">
+    <ResponseField name="id" type="string" required>
+      Unique identifier for the project.
+    </ResponseField>
+    <ResponseField name="name" type="string" required>
+      Human-readable name of the project.
+    </ResponseField>
+    <ResponseField name="slug" type="string" required>
+      URL-safe identifier used in the project's public URL.
+    </ResponseField>
+    <ResponseField name="visibility" type="string" required>
+      Whether the project is `public` or `private`.
+    </ResponseField>
+    <ResponseField name="created_at" type="string" required>
+      ISO 8601 timestamp of when the project was created.
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+### Example
+
+```bash
+curl "https://api.io-oi.ai/v1/projects" \
+  -H "Authorization: Bearer YOUR_API_KEY"
+```
+
+---
+
+## Get a project
+
+Retrieves full details for a single project, including member count, document count, and custom domain configuration.
+
+**GET** `/projects/:id`
+
+### Path parameters
+
+<ParamField path="id" type="string" required>
+  The unique identifier of the project to retrieve.
+</ParamField>
+
+### Response fields
+
+<ResponseField name="id" type="string" required>
+  Unique identifier for the project.
+</ResponseField>
+
+<ResponseField name="name" type="string" required>
+  Human-readable name of the project.
+</ResponseField>
+
+<ResponseField name="slug" type="string" required>
+  URL-safe identifier used in the project's public URL.
+</ResponseField>
+
+<ResponseField name="description" type="string">
+  Optional description of the project's purpose or contents.
+</ResponseField>
+
+<ResponseField name="visibility" type="string" required>
+  Whether the project is `public` or `private`.
+</ResponseField>
+
+<ResponseField name="member_count" type="number" required>
+  Number of collaborators with access to the project.
+</ResponseField>
+
+<ResponseField name="document_count" type="number" required>
+  Total number of documents in the project.
+</ResponseField>
+
+<ResponseField name="custom_domain" type="string">
+  Custom domain configured for this project, if any. Returns `null` when no custom domain is set.
+</ResponseField>
+
+<ResponseField name="created_at" type="string" required>
+  ISO 8601 timestamp of when the project was created.
+</ResponseField>
+
+### Example
+
+<CodeGroup>
+
+```bash cURL
+curl "https://api.io-oi.ai/v1/projects/proj_abc123" \
+  -H "Authorization: Bearer YOUR_API_KEY"
+```
+
+```javascript JavaScript
+const response = await fetch(
+  "https://api.io-oi.ai/v1/projects/proj_abc123",
+  {
+    headers: {
+      Authorization: "Bearer YOUR_API_KEY",
+    },
+  }
+);
+const project = await response.json();
+```
+
+</CodeGroup>
+
+---
+
+## Create a project
+
+Creates a new project under the authenticated user's account.
+
+**POST** `/projects`
+
+### Body parameters
+
+<ParamField body="name" type="string" required>
+  The display name for the new project.
+</ParamField>
+
+<ParamField body="description" type="string">
+  An optional description of the project.
+</ParamField>
+
+<ParamField body="visibility" type="string" default="private">
+  Access level for the project. Accepts `public` or `private`. Public projects are accessible to anyone with the link; private projects require authentication.
+</ParamField>
+
+### Response fields
+
+Returns the created project object with the same fields as [Get a project](#get-a-project).
+
+### Example
+
+<CodeGroup>
+
+```bash cURL
+curl -X POST "https://api.io-oi.ai/v1/projects" \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "API Integration Guide",
+    "description": "Documentation for third-party integrators.",
+    "visibility": "public"
+  }'
+```
+
+```javascript JavaScript
+const response = await fetch("https://api.io-oi.ai/v1/projects", {
+  method: "POST",
+  headers: {
+    Authorization: "Bearer YOUR_API_KEY",
+    "Content-Type": "application/json",
+  },
+  body: JSON.stringify({
+    name: "API Integration Guide",
+    description: "Documentation for third-party integrators.",
+    visibility: "public",
+  }),
+});
+const created = await response.json();
+```
+
+</CodeGroup>

@@ -1,0 +1,93 @@
+---
+title: "Publish and share your documentation with Io Ai"
+description: "Learn how to publish documents, use your Io Ai subdomain, connect a custom domain, update live docs, and take documentation offline."
+---
+
+Publishing in Io Ai makes your documentation available to readers on the web. Every project gets a subdomain out of the box, so you can go live immediately without any configuration. When you're ready, you can also connect your own domain. This guide walks you through the full publishing workflow.
+
+<Tip>
+Before you publish, switch the editor to **Preview mode** to see exactly how your document will look to readers. Check that headings render correctly, code blocks have the right syntax highlighting, and all internal links resolve to the right pages.
+</Tip>
+
+## Publish a document for the first time
+
+<Steps>
+  <Step title="Open the document">
+    From your project dashboard, open the document you want to publish.
+  </Step>
+  <Step title="Review the content">
+    Read through the document one final time. Confirm that the title is accurate, all steps are complete, and there are no placeholder sections left from a template or draft.
+  </Step>
+  <Step title="Click Publish">
+    Click the **Publish** button in the top-right corner of the editor. Io Ai builds the page and makes it live within a few seconds.
+  </Step>
+  <Step title="Confirm the published URL">
+    After publishing, Io Ai displays the live URL for the document. Copy it or open it in a new tab to verify that the page looks correct.
+  </Step>
+</Steps>
+
+## Your default subdomain
+
+Every Io Ai project is automatically assigned a subdomain in the format:
+
+```
+yourproject.io-oi.ai
+```
+
+This subdomain is available as soon as you create a project — no setup required. Your published documentation is accessible at this URL the moment you publish your first document.
+
+You can find your project's subdomain in **Project settings → Publishing**.
+
+## Publish to a custom domain
+
+To serve your documentation from your own domain (for example, `docs.yourcompany.com`), connect a custom domain in your project settings. For step-by-step instructions, see [Configure a custom domain](/configuration/custom-domain).
+
+<Note>
+Custom domain setup requires you to add DNS records through your domain registrar. Changes typically propagate within a few minutes, but may take up to 48 hours depending on your DNS provider.
+</Note>
+
+## Update live documentation
+
+Documents in Io Ai are not frozen after publishing. You can edit a published document at any time and push the updated version live.
+
+<Steps>
+  <Step title="Open the published document">
+    From your project dashboard, click the document you want to update. Published documents show a **Published** badge next to the title.
+  </Step>
+  <Step title="Make your edits">
+    Edit the content in the editor. Your changes are saved as a draft automatically — the live version is not affected until you republish.
+  </Step>
+  <Step title="Republish">
+    Click **Publish** to push your edits live. The updated page replaces the previous version immediately.
+  </Step>
+</Steps>
+
+## Unpublish a document
+
+If you need to take a document offline — for example, to remove outdated content or prepare a significant revision — you can unpublish it.
+
+<Steps>
+  <Step title="Open the document">
+    Navigate to the document in your project dashboard.
+  </Step>
+  <Step title="Open publishing options">
+    Click the dropdown arrow next to the **Publish** button and select **Unpublish**.
+  </Step>
+  <Step title="Confirm">
+    Confirm the action. The document is immediately removed from your published site. The content and all edit history are preserved in your dashboard.
+  </Step>
+</Steps>
+
+<Warning>
+Unpublishing a document removes it from your live site right away. Any external links pointing to that URL will return a 404 error. If the page contains content readers depend on, consider replacing it with a redirect or a "content moved" notice before unpublishing.
+</Warning>
+
+## Share published documentation
+
+Once a document is live, you can share it in a few ways:
+
+- **Copy the direct link** — Io Ai shows the URL for each published page in the editor and on the dashboard. Share this link directly with readers.
+- **Share the project root** — Share your project's subdomain or custom domain to give readers access to your full documentation site.
+- **Embed the link** — Paste the URL into support tickets, product changelogs, onboarding emails, or anywhere else your users need to find your docs.
+
+All published pages are publicly accessible by default. To manage who can view your documentation, configure visibility settings in [Project settings](/configuration/settings).

@@ -1,0 +1,136 @@
+---
+title: "Troubleshoot common issues with Io Ai"
+description: "Solutions for the most common Io Ai problems, including login errors, document saving issues, custom domains, publishing delays, and API errors."
+---
+
+If something isn't working as expected, you're in the right place. This page covers the most common issues Io Ai users run into and walks you through exactly how to fix each one. Work through the steps in order — most problems resolve at the first or second step. If you still need help after trying these steps, reach out to [support@io-oi.ai](mailto:support@io-oi.ai).
+
+## Account & access
+
+<AccordionGroup>
+  <Accordion title="Can't log in">
+    **Common causes:** incorrect email or password, SSO misconfiguration, or an unverified account.
+
+    **Steps to resolve:**
+
+    1. Double-check that you're using the exact email address you signed up with. Email addresses are case-sensitive.
+    2. Use the **Forgot password** link on the login page to reset your password. Check your spam folder if you don't see the reset email within a few minutes.
+    3. If your organization uses SSO (single sign-on), confirm with your IT administrator that your account has been provisioned in the identity provider and that the SSO connection is active for your domain.
+    4. If you signed up but never confirmed your email address, look for the verification email from Io Ai and click the confirmation link. Request a new verification email from the login page if the original has expired.
+
+    <Note>SSO users cannot log in with a password. If your organization enforces SSO, use the **Continue with SSO** option on the login page instead.</Note>
+  </Accordion>
+
+  <Accordion title="Collaborator can't access project">
+    **Common causes:** the invitation hasn't been accepted, the invitation was sent to the wrong email address, or the collaborator's role doesn't grant access to the resource they need.
+
+    **Steps to resolve:**
+
+    1. Go to your project's **Settings → Members** and confirm the collaborator appears in the member list. If they appear as **Pending**, they haven't accepted the invitation yet — ask them to check their inbox including the spam folder.
+    2. If the email address shown is wrong, remove the pending invitation and resend it to the correct address.
+    3. If the collaborator is listed as an active member but still can't access certain documents or features, check their assigned role. Viewer roles cannot edit documents. Change the role to **Editor** or **Admin** as appropriate from **Settings → Members**.
+
+    <Tip>Invitations expire after 7 days. If the link has expired, remove the pending invitation and send a fresh one.</Tip>
+  </Accordion>
+</AccordionGroup>
+
+## Documents & saving
+
+<AccordionGroup>
+  <Accordion title="Document not saving">
+    **Common causes:** autosave is disabled, a network interruption prevented the save, or your session has expired.
+
+    **Steps to resolve:**
+
+    1. Look for the save status indicator in the top bar of the editor. If it shows **Unsaved changes**, click **Save** manually with **Cmd+S** (Mac) or **Ctrl+S** (Windows/Linux).
+    2. Check your internet connection. Io Ai requires a stable connection to sync changes. If you're on a flaky connection, your changes are held locally until connectivity is restored.
+    3. If the editor shows a **Session expired** banner, save a local copy of your content (select all, copy), then refresh the page and paste your content back.
+    4. Confirm that autosave is enabled in your account settings under **Preferences → Editor → Autosave**.
+
+    <Warning>If you close the browser tab while the status shows **Saving…**, your most recent changes may not be persisted. Always wait for the **Saved** confirmation before closing.</Warning>
+  </Accordion>
+</AccordionGroup>
+
+## Publishing & domains
+
+<AccordionGroup>
+  <Accordion title="Custom domain not working">
+    **Common causes:** DNS records haven't propagated yet, the CNAME record is misconfigured, or domain verification is still pending in Io Ai.
+
+    **Steps to resolve:**
+
+    1. Verify that you've added the correct CNAME record in your DNS provider. The record should point to `custom.io-oi.ai`. Check your settings in Io Ai under **Project settings → Custom domain** for the exact values to use.
+    2. DNS propagation can take up to 48 hours depending on your DNS provider and TTL settings. Use a tool like [dnschecker.org](https://dnschecker.org) to check whether your CNAME has propagated globally.
+    3. Return to **Project settings → Custom domain** in Io Ai and click **Verify domain**. The domain status must show **Verified** before your docs will serve from the custom URL.
+    4. If verification keeps failing, confirm there are no conflicting DNS records (such as an A record) pointing to a different IP for the same subdomain.
+
+    For a full walkthrough, see the [custom domain configuration guide](/configuration/custom-domain).
+  </Accordion>
+
+  <Accordion title="Published docs not updating">
+    **Common causes:** your browser is showing a cached version of the page, the CDN hasn't propagated the new version yet, or you forgot to republish after making changes.
+
+    **Steps to resolve:**
+
+    1. Check that you clicked **Publish** after your last round of edits. Saving a document does not automatically publish it — publishing is a separate action.
+    2. Do a hard refresh in your browser: **Cmd+Shift+R** on Mac or **Ctrl+Shift+R** on Windows/Linux. This bypasses the local browser cache.
+    3. If the hard refresh doesn't help, open the page in a private/incognito window to rule out browser caching entirely.
+    4. After publishing, CDN propagation typically takes 1–5 minutes. If you've just published, wait a few minutes and try again.
+
+    <Note>If you're on a custom domain, make sure your DNS provider's cache has also cleared. Some providers cache aggressively and may require a longer wait.</Note>
+  </Accordion>
+</AccordionGroup>
+
+## AI assistant
+
+<AccordionGroup>
+  <Accordion title="AI assistant not responding">
+    **Common causes:** you've reached the AI rate limit for your plan, a browser extension is blocking requests, or a network issue is preventing the assistant from connecting.
+
+    **Steps to resolve:**
+
+    1. Check whether you've hit your plan's monthly AI request limit. Go to **Settings → Usage** to see your current consumption. If you've reached the limit, upgrade your plan or wait for the next billing cycle.
+    2. Disable browser extensions one at a time — particularly ad blockers, privacy shields, and script blockers — and try the AI assistant again. Some extensions block the API calls the assistant relies on.
+    3. Check your internet connection and confirm you can reach other parts of Io Ai. If your connection is fine but the assistant still doesn't respond, try the assistant in a different browser or in a private window.
+    4. If none of the above resolves the issue, check the [Io Ai status page](https://io-oi.ai/status) to see if there's an ongoing service incident.
+  </Accordion>
+</AccordionGroup>
+
+## API
+
+<AccordionGroup>
+  <Accordion title="API requests returning 401 Unauthorized">
+    **Common causes:** you're using an invalid or revoked API key, or the `Authorization` header is formatted incorrectly.
+
+    **Steps to resolve:**
+
+    1. Go to **Settings → API keys** and confirm your key is listed and shows an **Active** status. If the key has been revoked, generate a new one.
+    2. Check the format of your `Authorization` header. It must use the Bearer scheme exactly as shown:
+
+       ```http
+       Authorization: Bearer YOUR_API_KEY
+       ```
+
+       Common mistakes include omitting `Bearer`, adding extra spaces, or pasting the key with surrounding quotes.
+    3. Confirm you're sending the header with every request. The Io Ai API is stateless — authentication must be included on each call.
+
+    For full authentication details, see the [API authentication reference](/api-reference/authentication).
+  </Accordion>
+
+  <Accordion title="API requests returning 429 Too Many Requests">
+    **Common causes:** your integration is sending requests faster than your plan's rate limit allows.
+
+    **Steps to resolve:**
+
+    1. Check the `Retry-After` header in the 429 response. This value tells you how many seconds to wait before making another request. Respect this header in your retry logic rather than retrying immediately.
+    2. Implement exponential backoff in your integration: wait progressively longer between retries (for example, 1 second, then 2, then 4) rather than retrying on a fixed interval.
+    3. Review your integration for unnecessary duplicate requests or polling loops that can be replaced with [webhooks](/api-reference/webhooks).
+    4. If you consistently hit rate limits under normal usage, consider upgrading your plan. Current rate limits for each plan are listed in your **Settings → API keys** page.
+
+    <Tip>Batch operations where possible. Updating multiple documents in a single request counts as one API call, not one per document.</Tip>
+  </Accordion>
+</AccordionGroup>
+
+---
+
+Still stuck? Email the support team at [support@io-oi.ai](mailto:support@io-oi.ai) and include any error messages you see, the steps you've already tried, and your account email address. The team typically responds within one business day.

@@ -1,0 +1,130 @@
+---
+title: "Frequently asked questions about using Io Ai"
+description: "Quick answers to the most common questions about Io Ai — from getting started and editing documents to publishing, custom domains, and the API."
+---
+
+If you're new to Io Ai or looking for a quick answer, this page covers the questions we hear most often. Questions are grouped by topic so you can jump straight to what you need. If your question isn't answered here, reach out to [support@io-oi.ai](mailto:support@io-oi.ai) and the team will get back to you.
+
+## Getting started
+
+<AccordionGroup>
+  <Accordion title="What is Io Ai?">
+    Io Ai is an AI-powered documentation platform that helps you write, manage, and publish clear, plain-language docs. You write in the editor — or let the AI assistant draft content for you — and Io Ai handles publishing, versioning, and collaboration. You can publish to a hosted Io Ai URL or connect your own custom domain.
+  </Accordion>
+
+  <Accordion title="Is there a free plan?">
+    Yes. Io Ai offers a free plan that lets you create projects, write documents, and publish to an Io Ai-hosted URL. The free plan includes a limited number of AI assistant requests per month. Paid plans unlock higher AI usage limits, custom domains, advanced collaboration features, and priority support. See the [pricing page](https://io-oi.ai/pricing) for a full plan comparison.
+  </Accordion>
+
+  <Accordion title="How do I create my first project?">
+    After signing up and verifying your email:
+
+    1. Click **New project** from your dashboard.
+    2. Give your project a name and choose a URL slug for the hosted docs.
+    3. Add your first document by clicking **New document** inside the project.
+    4. Write your content in the editor and click **Publish** when you're ready.
+
+    For a guided walkthrough, follow the [quickstart guide](/quickstart).
+  </Accordion>
+</AccordionGroup>
+
+## Documents & editing
+
+<AccordionGroup>
+  <Accordion title="What file formats does Io Ai support?">
+    The Io Ai editor natively supports **Markdown** (`.md`) and **MDX** (`.mdx`). MDX extends Markdown with support for Mintlify components such as callout boxes, tabs, accordions, and code groups. When you export a document, you can download it as a `.md` or `.mdx` file.
+
+    Plain text (`.txt`) files can be pasted directly into the editor. Io Ai does not currently support importing Word (`.docx`) or PDF files directly, though you can paste content from those formats and the AI assistant can help reformat it.
+  </Accordion>
+
+  <Accordion title="Can I import existing documentation?">
+    Yes. You can paste Markdown or plain text content directly into the editor. If you have an existing Mintlify documentation site or a GitHub repository containing `.md` or `.mdx` files, you can connect it through the [GitHub integration](/configuration/integrations) to sync your content automatically.
+
+    The AI assistant can also help you reformat or rewrite imported content into cleaner plain language once it's in the editor.
+  </Accordion>
+
+  <Accordion title="How does version history work?">
+    Io Ai saves a version snapshot every time you publish a document. You can view the version history for any document by opening it and clicking **History** in the top toolbar. From there you can preview any previous version and restore it with one click.
+
+    <Note>Version history is available on paid plans. The free plan retains your last 5 published versions per document.</Note>
+  </Accordion>
+
+  <Accordion title="Is there a document size limit?">
+    Individual documents can be up to 2 MB of text content, which is well above what you'd need for even a long reference page. There is no hard limit on the number of documents per project on any plan, though the free plan is limited to 3 projects total.
+  </Accordion>
+</AccordionGroup>
+
+## AI assistant
+
+<AccordionGroup>
+  <Accordion title="How does the AI writing assistant work?">
+    The AI assistant is built into the editor. Select any text and choose an action — such as **Improve clarity**, **Shorten**, **Expand**, or **Rewrite in plain language** — and the assistant rewrites the selection in place. You can also place your cursor at the end of a paragraph and choose **Continue writing** to let the assistant draft the next section based on your existing content.
+
+    The assistant works best when your document has some content to start from. The more context you give it, the more relevant the output.
+  </Accordion>
+
+  <Accordion title="Does the AI store my content?">
+    Your document content is sent to the AI model only when you explicitly trigger an AI action (for example, clicking **Improve clarity**). Io Ai does not use your content to train AI models, and your content is not stored by the AI provider beyond the duration of the API call. See the [Io Ai privacy policy](https://io-oi.ai/privacy) for full details.
+  </Accordion>
+
+  <Accordion title="What languages does the AI support?">
+    The AI assistant can read and write in most major world languages, including English, Spanish, French, German, Portuguese, Japanese, Korean, and Chinese (Simplified and Traditional). For best results, write your document in the target language from the start rather than asking the assistant to translate after the fact.
+
+    <Tip>If you work across multiple languages, keeping each document in a single language produces cleaner AI output than mixing languages within one document.</Tip>
+  </Accordion>
+</AccordionGroup>
+
+## Publishing & domains
+
+<AccordionGroup>
+  <Accordion title="Can I use my own domain?">
+    Yes. You can connect a custom domain to any project on a paid plan. Go to **Project settings → Custom domain**, enter your domain, and follow the instructions to add a CNAME record with your DNS provider. Once the domain is verified and DNS has propagated, your docs will be served from your custom URL.
+
+    For step-by-step instructions, see the [custom domain configuration guide](/configuration/custom-domain).
+  </Accordion>
+
+  <Accordion title="How long does DNS propagation take?">
+    DNS changes typically propagate within 1–24 hours, though in some cases it can take up to 48 hours depending on your DNS provider's TTL (time-to-live) settings. You can check propagation status using a tool like [dnschecker.org](https://dnschecker.org) to see whether your CNAME record has updated globally.
+
+    If you're in a hurry, lowering your DNS record's TTL to 300 seconds (5 minutes) before making the change will speed up propagation on future updates.
+  </Accordion>
+
+  <Accordion title="Can I password-protect my docs?">
+    Yes. You can restrict access to your published docs by enabling **Password protection** in your project's **Settings → Publishing** section. Visitors will be prompted to enter the password before viewing any page. This is useful for internal documentation or early-access content you're not ready to make fully public.
+
+    For more granular access control — such as restricting to specific email domains — that feature is available on the Business plan.
+  </Accordion>
+</AccordionGroup>
+
+## API & integrations
+
+<AccordionGroup>
+  <Accordion title="Where do I find my API key?">
+    Go to **Settings → API keys** in your Io Ai account. Click **Generate new key**, give it a descriptive name (for example, "CI pipeline" or "local dev"), and copy the key immediately — it won't be shown again after you close the dialog.
+
+    Keep your API key secret. Don't commit it to source control or expose it in client-side code. If a key is compromised, revoke it from the same page and generate a replacement.
+
+    For usage details, see the [API authentication reference](/api-reference/authentication).
+  </Accordion>
+
+  <Accordion title="Is there a GitHub integration?">
+    Yes. You can connect a GitHub repository to your Io Ai project under **Project settings → Integrations**. Once connected, Io Ai can sync `.md` and `.mdx` files from a specified branch in your repository, so your docs stay in version control alongside your code.
+
+    Changes pushed to the connected branch are automatically reflected in your Io Ai project. You can configure which folder in the repository Io Ai watches. See the [integrations guide](/configuration/integrations) for setup instructions.
+  </Accordion>
+
+  <Accordion title="What's the API rate limit?">
+    Rate limits depend on your plan:
+
+    | Plan | Requests per minute |
+    |------|--------------------:|
+    | Free | 100 |
+    | Pro  | 1,000 |
+
+    If you exceed the rate limit, the API returns a `429 Too Many Requests` response with a `Retry-After` header indicating how many seconds to wait. For help handling rate limit errors, see the [troubleshooting guide](/troubleshooting).
+  </Accordion>
+</AccordionGroup>
+
+---
+
+Didn't find what you were looking for? Email [support@io-oi.ai](mailto:support@io-oi.ai) with your question and your account email address. The support team typically responds within one business day.

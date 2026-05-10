@@ -1,0 +1,94 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "luma",
+  "name": "Io Ai",
+  "colors": {
+    "primary": "#24242c",
+    "light": "#74747c",
+    "dark": "#e7ecf2"
+  },
+  "favicon": "https://media.brand.dev/eca9251c-0e77-423c-bd29-24954284f0cf.jpg",
+  "logo": {
+    "light": "https://media.brand.dev/44b5885c-8c39-4c92-96e8-b568207b7348.svg",
+    "dark": "https://media.brand.dev/44b5885c-8c39-4c92-96e8-b568207b7348.svg"
+  },
+  "navbar": {
+    "links": [
+      {
+        "label": "Support",
+        "href": "mailto:support@io-oi.ai"
+      }
+    ],
+    "primary": {
+      "type": "github",
+      "href": "https://github.com/io-oi-ai/plain-docs"
+    }
+  },
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Documentation",
+        "groups": [
+          {
+            "group": "Get Started",
+            "pages": [
+              "introduction",
+              "quickstart",
+              "concepts"
+            ]
+          },
+          {
+            "group": "Guides",
+            "pages": [
+              "guides/creating-docs",
+              "guides/ai-writing",
+              "guides/publishing",
+              "guides/collaboration"
+            ]
+          },
+          {
+            "group": "Configuration",
+            "pages": [
+              "configuration/settings",
+              "configuration/integrations",
+              "configuration/custom-domain"
+            ]
+          },
+          {
+            "group": "Help",
+            "pages": [
+              "troubleshooting",
+              "faq"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "API Reference",
+        "groups": [
+          {
+            "group": "Overview",
+            "pages": [
+              "api-reference/introduction",
+              "api-reference/authentication"
+            ]
+          },
+          {
+            "group": "Endpoints",
+            "pages": [
+              "api-reference/documents",
+              "api-reference/projects",
+              "api-reference/publishing",
+              "api-reference/webhooks"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "footer": {
+    "socials": {
+      "github": "https://github.com/io-oi-ai"
+    }
+  }
+}

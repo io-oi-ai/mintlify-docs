@@ -1,0 +1,97 @@
+---
+title: "Quickstart: create and publish your first Io Ai docs"
+description: "Sign up, create a project, write your first document with the AI assistant, and publish your docs live — all in under five minutes."
+---
+
+This guide walks you through everything you need to get your first Io Ai documentation site live. By the end, you'll have a published document accessible at a public URL and a clear picture of how Io Ai works day to day.
+
+<Steps>
+  <Step title="Sign up and create your account">
+    Go to [io-oi.ai](https://io-oi.ai) and click **Get started**. You can sign up with a Google account or an email address and password.
+
+    After you sign up, Io Ai prompts you to create your first project. Give your project a name — this is also used as the default subdomain for your published docs (for example, `my-project.io-oi.ai`).
+
+    <Tip>
+      You can rename your project and change its subdomain later from **Project settings**. Pick whatever name makes sense right now.
+    </Tip>
+  </Step>
+
+  <Step title="Create your first project">
+    If you skipped project creation during sign-up, click **New project** from your dashboard. Fill in:
+
+    - **Name** — a short, descriptive title for this documentation site
+    - **Visibility** — choose **Private** while you're getting started; switch to **Public** when you're ready to share
+
+    Click **Create project**. Io Ai opens your new project and shows you an empty document list.
+  </Step>
+
+  <Step title="Write your first document">
+    Click **New document** inside your project. Give the document a title, then start typing in the editor.
+
+    To use the AI assistant, select any text you've written and click **Improve with AI**, or type `/ai` on a blank line to open the prompt panel. Describe what you want — for example, "Rewrite this in plain language" or "Add a step-by-step introduction" — and the assistant drafts the content for you.
+
+    <Note>
+      The AI assistant works best when you give it specific instructions. Instead of "make this better", try "simplify this for a non-technical audience" or "break this into numbered steps".
+    </Note>
+
+    You can also write directly in Markdown or MDX. Io Ai renders a live preview alongside the editor so you always see what your readers will see.
+  </Step>
+
+  <Step title="Invite a collaborator (optional)">
+    If you're working with a team, add them now. Open **Project settings** and go to the **Members** tab. Enter your collaborator's email address and choose a role:
+
+    - **Editor** — can create, edit, and publish documents
+    - **Viewer** — can read all documents in the project, including unpublished drafts
+
+    Your collaborator receives an email invitation and can join as soon as they accept it.
+  </Step>
+
+  <Step title="Publish and share your docs">
+    When you're happy with your document, click **Publish** in the top-right corner of the editor. Io Ai immediately makes that document live at your project's URL.
+
+    To share your entire project, click **Share** from your project dashboard. Copy the link and send it to your audience.
+
+    If you want to use your own domain instead of the default Io Ai subdomain, see the [custom domain guide](/configuration/custom-domain).
+  </Step>
+</Steps>
+
+## Using the API to create a document
+
+You can also create and update documents programmatically using the Io Ai REST API. First, generate an API key from **Account settings → API keys**. Then send a `POST` request to create a document:
+
+```bash
+curl --request POST \
+  --url https://api.io-oi.ai/v1/documents \
+  --header "Authorization: Bearer YOUR_API_KEY" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "project_id": "proj_abc123",
+    "title": "My first document",
+    "content": "# Hello\n\nThis document was created via the API."
+  }'
+```
+
+Replace `YOUR_API_KEY` with the key you generated and `proj_abc123` with your project's ID (visible in **Project settings → General**).
+
+A successful request returns a `201` response with the new document's `id`, `title`, and `url`.
+
+<Tip>
+  Store your API key in an environment variable rather than hardcoding it. Use `export IO_AI_KEY=your_key_here` and reference it as `$IO_AI_KEY` in your scripts.
+</Tip>
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Core concepts" icon="book" href="/concepts">
+    Understand how projects, documents, publishing, and collaborator roles fit together.
+  </Card>
+  <Card title="AI writing guide" icon="wand-magic-sparkles" href="/guides/ai-writing">
+    Learn how to get the most out of the AI assistant when drafting and improving content.
+  </Card>
+  <Card title="Publishing guide" icon="globe" href="/guides/publishing">
+    Set up a custom domain and control which documents are visible to your audience.
+  </Card>
+  <Card title="API reference" icon="plug" href="/api-reference/introduction">
+    Explore every endpoint available in the Io Ai REST API.
+  </Card>
+</CardGroup>

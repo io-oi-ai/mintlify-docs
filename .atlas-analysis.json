@@ -1,0 +1,89 @@
+{
+  "projectType": "saas",
+  "projectName": "Io Ai",
+  "projectDescription": "An AI-powered platform for creating, managing, and publishing plain-language documentation effortlessly.",
+  "theme": "luma",
+  "primaryColor": "#24242c",
+  "lightColor": "#74747c",
+  "darkColor": "#e7ecf2",
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Documentation",
+        "groups": [
+          {
+            "group": "Get Started",
+            "pages": [
+              "introduction",
+              "quickstart",
+              "concepts"
+            ]
+          },
+          {
+            "group": "Guides",
+            "pages": [
+              "guides/creating-docs",
+              "guides/ai-writing",
+              "guides/publishing",
+              "guides/collaboration"
+            ]
+          },
+          {
+            "group": "Configuration",
+            "pages": [
+              "configuration/settings",
+              "configuration/integrations",
+              "configuration/custom-domain"
+            ]
+          },
+          {
+            "group": "Help",
+            "pages": [
+              "troubleshooting",
+              "faq"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "API Reference",
+        "groups": [
+          {
+            "group": "Overview",
+            "pages": [
+              "api-reference/introduction",
+              "api-reference/authentication"
+            ]
+          },
+          {
+            "group": "Endpoints",
+            "pages": [
+              "api-reference/documents",
+              "api-reference/projects",
+              "api-reference/publishing",
+              "api-reference/webhooks"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "keyFeatures": [
+    "AI-assisted plain-language documentation writing",
+    "One-click publishing to custom domains",
+    "Real-time collaboration on documentation projects",
+    "Markdown and MDX support",
+    "Integration with GitHub and version control",
+    "REST API for programmatic access"
+  ],
+  "publicApiSurface": [
+    "GET /documents",
+    "POST /documents",
+    "PUT /documents/:id",
+    "DELETE /documents/:id",
+    "GET /projects",
+    "POST /projects",
+    "POST /publish",
+    "POST /webhooks"
+  ]
+}
