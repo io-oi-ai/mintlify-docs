@@ -1,55 +1,58 @@
-# Mintlify Starter Kit
+# Plain · Docs
 
-Use the starter kit to get your docs deployed and ready to customize.
+Mintlify 站源,部署到 https://docs.inplain.app(或后续 Vercel 自定义域)。
 
-Click the green **Use this template** button at the top of this repo to copy the Mintlify starter kit. The starter kit contains examples with
-
-- Guide pages
-- Navigation
-- Customizations
-- API reference pages
-- Use of popular components
-
-**[Follow the full quickstart guide](https://starter.mintlify.com/quickstart)**
-
-## AI-assisted writing
-
-Set up your AI coding tool to work with Mintlify:
+## 本地预览
 
 ```bash
-npx skills add https://mintlify.com/docs
-```
-
-This command installs Mintlify's documentation skill for your configured AI tools like Claude Code, Cursor, Windsurf, and others. The skill includes component reference, writing standards, and workflow guidance.
-
-See the [AI tools guides](/ai-tools) for tool-specific setup.
-
-## Development
-
-Install the [Mintlify CLI](https://www.npmjs.com/package/mint) to preview your documentation changes locally. To install, use the following command:
-
-```
-npm i -g mint
-```
-
-Run the following command at the root of your documentation, where your `docs.json` is located:
-
-```
+cd apps/docs
 mint dev
+# 打开 http://localhost:3000
 ```
 
-View your local preview at `http://localhost:3000`.
+## 验证
 
-## Publishing changes
+```bash
+mint validate         # MDX 语法 + frontmatter
+mint broken-links     # 链接完整性
+mint a11y             # WCAG 检查
+```
 
-Install our GitHub app from your [dashboard](https://dashboard.mintlify.com/settings/organization/github-app) to propagate changes from your repo to your deployment. Changes are deployed to production automatically after pushing to the default branch.
+## 部署
 
-## Need help?
+两种路径任选:
 
-### Troubleshooting
+### 1. Mintlify Cloud(推荐,最快)
 
-- If your dev environment isn't running: Run `mint update` to ensure you have the most recent version of the CLI.
-- If a page loads as a 404: Make sure you are running in a folder with a valid `docs.json`.
+1. 推这个 repo 到 GitHub
+2. mintlify.com 连仓 → 选 root = `apps/docs`
+3. 自动 deploy,默认 `<project>.mintlify.app`
+4. 自定义域 `docs.inplain.app`:DNS 加 CNAME → `cname.mintlify.com`
+5. 主站 `/docs` 路由会读 env `NEXT_PUBLIC_DOCS_URL=https://docs.inplain.app`
+   后自动 server-redirect 过去
 
-### Resources
-- [Mintlify documentation](https://mintlify.com/docs)
+### 2. Self-host(后续考虑)
+
+Mintlify 支持导出 static build,但还在 beta。现阶段 hosted 方案就够。
+
+## 文件组织
+
+```
+apps/docs/
+├ docs.json                    Mintlify 配置 + navigation
+├ index.mdx                    /
+├ quickstart.mdx               /quickstart
+├ concepts/                    Plain 的 thesis
+├ forms/                       Deck / Doc / Sheet 各 1 篇
+├ workflow/                    Inspect / cross-doc / share / present
+├ brand/                       Upload + batch generate
+├ ai/                          MCP + Cursor + Claude Code
+├ cli/                         Install / commands / BYOK
+└ api/                         Overview / Auth / Agent / Render / Export
+```
+
+## MDX 注意事项
+
+- frontmatter 值有英文双引号时,**不能再嵌一对** — 用 `「」` 中文引号或 `'` 单引号
+- icons 用 [Lucide](https://lucide.dev/icons) 或 [Font Awesome](https://fontawesome.com/search) 名字
+- `<Card>` `<CardGroup>` `<Steps>` `<AccordionGroup>` `<Tip>` `<Note>` `<CodeGroup>` 都是内置组件

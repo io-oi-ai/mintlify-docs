@@ -1,0 +1,48 @@
+---
+title: "BYOK · 自带 API key"
+description: "想绕过 Plain gateway 直接用自家 LLM key,加一行 env 就行。"
+icon: "key"
+---
+
+<Note>
+  Beta 期 BYOK 全开放,正式上线后 BYOK 仅在 Pro / Team 计划可用。
+</Note>
+
+## 直接用 Anthropic key
+
+```bash
+export ANTHROPIC_API_KEY=sk-ant-xxx
+plain deck generate "..."
+```
+
+CLI 会跳过 Plain gateway,直连 anthropic.com。token 计费走你的 Anthropic 账号,
+不消耗 Plain 月度配额。
+
+## OpenAI / DeepSeek / Google / Ollama
+
+```bash
+export OPENAI_API_KEY=sk-xxx
+export DEEPSEEK_API_KEY=sk-xxx
+export GOOGLE_GENERATIVE_AI_API_KEY=AIza-xxx
+# Ollama 本地不需要 key
+```
+
+模型选择走 `~/.config/plain/models.json` 或环境变量
+`PLAIN_GENERATOR_MODEL=anthropic/claude-haiku-4-5-20251001` 等。
+
+## 切到自家 gateway
+
+```bash
+export PLAIN_GATEWAY_URL=https://my-internal-gateway.company.com
+export PLAIN_API_KEY=internal_key_xxx
+```
+
+适合企业 — 把 Plain CLI 接到你自己的 LLM 路由层(Litellm / Portkey / OpenRouter),
+集中管 quota / audit。
+
+## 验证当前用哪个 provider
+
+```bash
+plain config
+# 输出会显示当前 generator/router/editor 三个 role 各自走的 provider + model
+```

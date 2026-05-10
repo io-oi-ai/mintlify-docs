@@ -1,0 +1,89 @@
+---
+title: "Deck"
+description: "Marp Markdown + 30+ rich layouts + 主题切换。"
+icon: "presentation-screen"
+---
+
+Plain 的 deck 源是 [Marp](https://marp.app) 兼容的 Markdown,
+带额外 frontmatter / `<!-- layout:xxx -->` 注解承载 layout 选择。
+渲染产出 SVG-based marpit HTML,导出 `.pptx` / PDF。
+
+## 一份最小 deck
+
+```markdown deck.md
+---
+marp: true
+theme: plain-mono
+paginate: true
+---
+
+<!-- layout:cover -->
+<!-- tone:hero-dark -->
+
+# 一句话核心结论
+
+**副标题 · 上下文 · 元数据**
+
+---
+
+<!-- layout:stats -->
+
+## 三个关键数字
+
+<!-- plain-data:stats
+[
+  {"value":"60%","label":"用户痛点 1","delta":"+12pp"},
+  {"value":"23%","label":"用户痛点 2"},
+  {"value":"17%","label":"用户痛点 3"}
+]
+-->
+```
+
+## 30+ 内置 layouts
+
+按场景分组:
+
+<AccordionGroup>
+  <Accordion title="基础(content / cover / quote / hero-question)">
+    最常用:cover 大标题、content 标题+bullets、quote 大引用、
+    hero-question 留白引人深思的问题页。
+  </Accordion>
+  <Accordion title="数据(stats / sparkline / progress / timeline)">
+    stats 4-6 数字阵列,sparkline 趋势 KPI,progress 进度条,
+    timeline 横向时间轴。
+  </Accordion>
+  <Accordion title="对比(compare / two-col / quadrant / venn / waterfall / swimlane / layer-stack)">
+    compare 左右对比,quadrant 二维定位图,venn 文氏图,
+    waterfall 财务桥接,swimlane 多角色流程,layer-stack 分层架构。
+  </Accordion>
+  <Accordion title="图文(image-hero / image-split / callout / pipeline / profile / code)">
+    image-hero 满版图,image-split 图文分栏,callout 信息框,
+    pipeline 编号流程,profile 团队卡片,code 代码块。
+  </Accordion>
+  <Accordion title="杂志(article-spread / editor-letter / photo-essay / data-feature / sidebar-story / pull-quote-break)">
+    Editorial pack — Monocle/Newsreader 风的长文 layouts。
+  </Accordion>
+</AccordionGroup>
+
+## 主题
+
+12 套预设 + 5 个 direction(school):
+
+- `plain-mono` `plain-bold` `plain-editorial` `plain-serene` `plain-dusk` `plain-kami`
+- 5 个 direction × 2-4 个手工调研的 brand preset(Linear / Stripe / Notion / Apple 风)
+
+工作台右上角 **风格 ▾** 切换,工作区级 default 在 settings 里设。
+
+## 演讲模式
+
+`⌘P` 或命令面板搜 "演讲" → fullscreen + 翻页笔 + S 键 speaker notes。
+详见 [Workflow · Present mode](/workflow/present-mode)。
+
+## 导出
+
+```bash
+plain export deck.md --to=pptx   # 给老式 Office
+plain export deck.md --to=pdf    # 给打印
+```
+
+或工作台 ⌘E。

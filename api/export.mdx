@@ -1,0 +1,65 @@
+---
+title: "Export"
+description: "Source → .pptx / .docx / .xlsx / .pdf 二进制。"
+icon: "file-export"
+---
+
+## Request
+
+```http
+POST /api/export
+Content-Type: application/json
+Authorization: Bearer plain_pk_xxx (或 cookie)
+
+{
+  "kind": "deck",
+  "format": "pptx",
+  "source": "---\nmarp: true\n...",
+  "workspace": [],
+  "filename": "Q3-pitch"
+}
+```
+
+| Field | 含义 |
+| --- | --- |
+| `kind` | "deck" \| "doc" \| "sheet" |
+| `format` | "pptx" \| "docx" \| "xlsx" \| "pdf" |
+| `source` | 源码 |
+| `workspace` | @ref / [sheet:embed] 解析上下文 |
+| `filename` | 不带扩展名,server 会自动加 |
+
+## 允许组合
+
+- `deck` → pptx \| pdf
+- `doc` → docx \| pdf
+- `sheet` → xlsx \| pdf
+
+## Response
+
+`Content-Type: application/vnd.openxmlformats-officedocument.*` 二进制 +
+`Content-Disposition: attachment; filename="..."` 让浏览器自动下载。
+
+## 用例
+
+```js
+const res = await fetch('https://inplain.app/api/export', {
+  method: 'POST',
+  headers: {
+    'content-type': 'application/json',
+    'authorization': `Bearer ${PAT}`,
+  },
+  body: JSON.stringify({ kind: 'deck', format: 'pptx', source }),
+});
+const blob = await res.blob();
+const url = URL.createObjectURL(blob);
+window.location.href = url;
+```
+
+## 保真承诺
+
+- `.pptx` → PowerPoint / Keynote / WPS 都能开
+- `.xlsx` → formula 列转 Excel 公式(不是 baked 计算结果)
+- `.pdf` → 浏览器打印 pipeline,字体保真
+- `.docx` → Word / Pages 都能开
+
+如果你需要严格按公司模板视觉导出,见 [Brand templates](/brand/upload)。

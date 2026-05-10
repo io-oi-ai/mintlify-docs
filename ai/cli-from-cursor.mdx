@@ -1,0 +1,56 @@
+---
+title: "在 Cursor 里调 Plain"
+description: "Cursor 的 .cursorrules 加一段,让它知道 Plain 在哪。"
+icon: "code"
+---
+
+## 设置 1:走 MCP(推荐)
+
+跟 Claude Code 一样的 [MCP 配置](/ai/mcp),Cursor 0.42+ 支持。
+
+`~/.cursor/mcp.json`:
+
+```json
+{
+  "mcpServers": {
+    "plain": {
+      "command": "pnpm",
+      "args": ["dlx", "@plain/cli", "mcp"]
+    }
+  }
+}
+```
+
+## 设置 2:.cursorrules 走 CLI
+
+如果你不想配 MCP,在项目根写一份 `.cursorrules`:
+
+```markdown
+# 输出文档时用 Plain CLI
+
+需要产出 PPT / Word / Excel / 长文报告时,
+不要直接生成 .pptx 二进制。改用:
+
+```bash
+plain deck generate "这里写 prompt" > deck.md
+plain export deck.md --to=pptx
+```
+
+理由:
+- .md 源可 review / version control
+- .pptx 是 derivative,可重新生成
+```
+
+Cursor 会读这个并按你的方式调 CLI。
+
+## Pattern: 让 Cursor 给 PR 写一份 deck
+
+```
+你: 这次 PR 的内容做成 6 页 deck 给团队看。
+
+Cursor:
+  → 读 git diff
+  → 用 diff 摘要当 plain deck generate 的 prompt
+  → 跑 plain export deck.md --to=pptx
+  → 把 .pptx 路径告诉你
+```

@@ -1,0 +1,72 @@
+---
+title: "Sheet"
+description: "CSV 源 + ECharts SVG 图表 + 公式引擎。"
+icon: "table"
+---
+
+Plain 的 sheet 源是 frontmatter + 一段 CSV,渲染成可排序/可筛选的 HTML 表格 + 内嵌 ECharts SVG 图。
+
+## 一份最小 sheet
+
+````markdown retention.md
+---
+kind: sheet
+title: 客户留存模型
+columns:
+  - {key: customer, label: 客户, type: string}
+  - {key: retention, label: 本期留存, type: string}
+  - {key: trend, label: 趋势, type: string}
+charts:
+  - {id: c1, type: bar, title: 客户留存对比, xKey: customer, yKeys: [retention]}
+---
+
+```csv
+customer,retention,trend
+Acme,58%,降
+Globex,81%,升
+Initech,42%,深降
+```
+
+**变化点** → 2 个客户进入风险区。
+````
+
+## 数据 + 图表
+
+每个 chart 用 frontmatter 声明,渲染时 server 端用 ECharts 输出 SVG
+(不是 client-side JS,所以分享链接打开就是图,不依赖运行时)。
+
+支持的 chart 类型:
+- `bar` 柱图
+- `line` 折线
+- `pie` 饼图
+- `scatter` 散点
+- `heatmap` 热力
+
+## 公式引擎
+
+```yaml frontmatter
+columns:
+  - {key: revenue, label: 收入, type: number}
+  - {key: cost, label: 成本, type: number}
+  - {key: margin, label: 毛利率, type: formula, expr: "(revenue - cost) / revenue"}
+```
+
+`formula` 列在 server 渲染时自动计算,客户端看到结果不看到表达式。
+
+## 跨 sheet 引用
+
+```markdown
+平均留存:@sheet:retention:col:retention:avg
+```
+
+任意 deck/doc 都能用 `@sheet:id:col:xxx` 引这个 sheet 的某列汇总值,
+sheet 改了所有引用同步刷新。
+
+## 导出
+
+```bash
+plain export sheet.md --to=xlsx   # 给 Excel
+```
+
+注:.xlsx 导出会把 formula 列转成真正的 Excel 公式,而不是导出计算结果 ——
+让客户能在 Excel 里继续推导。

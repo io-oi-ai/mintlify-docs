@@ -1,0 +1,46 @@
+---
+title: "上传公司 PPT 模板"
+description: "高度设计稿场景:Plain 锁定样板版式,只让 AI 填字。"
+icon: "upload"
+---
+
+## 谁需要这个
+
+如果你的公司有官方 PPT 模板,且模板包含**自定义视觉**
+(特殊形状、母版背景、Logo / 装饰图层、品牌色 + 字体),
+普通 marp 主题没法 100% 还原。
+
+Plain 的方案:**整页样板原样保留,AI 只在样板的 placeholder 里填字**。
+
+## 怎么用
+
+<Steps>
+  <Step title="工作台 ⌘K → Brand 模板">
+    或直接打开 [inplain.app/app/brands](https://inplain.app/app/brands)。
+  </Step>
+  <Step title="上传 .pptx (≤20MB)">
+    Plain 解析样板:抽出 layout 清单 + placeholder + 主题色 + 字体 + 缩略图。
+    保存到你账号下,工作区私有。
+  </Step>
+  <Step title="确认 layouts">
+    右侧显示样板包含的所有 layout(Title slide / Content / Section header / 等),
+    每个 layout 标了 placeholder 数量。
+  </Step>
+</Steps>
+
+## 单份生成
+
+每行输入主题 + 期望页数 + (可选)附加要求 → 单份"下载"按钮。
+AI 在 layouts 集合里挑选 + 填字 → 用 JSZip 直接编辑原 pptx 字节
+→ 输出新 .pptx。**视觉 100% = 样板**。
+
+## 批量 N 份
+
+[详见下一页](/brand/batch-generate)。
+
+## 限制
+
+- 样板文件 < 20MB
+- 单批最多 12 个主题(避免 LLM rate limit)
+- 工作台 marp 预览**不会**像样板(CSS 翻不出贝塞尔)—— 完整视觉只在导出 .pptx
+- 样板没有的 layout AI 不会"创造",会回落到 content

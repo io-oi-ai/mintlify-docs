@@ -1,0 +1,63 @@
+---
+title: "API overview"
+description: "REST,JSON,Bearer auth。"
+icon: "code"
+---
+
+<Note>
+  Plain API 还在 beta,字段可能变。锁版本生产用建议先 email
+  [hi@inplain.app](mailto:hi@inplain.app)。
+</Note>
+
+## Base URL
+
+```
+https://inplain.app/api
+```
+
+## Auth
+
+所有非公开端点要 Bearer token。两种:
+
+1. **Cookie session** — Web app 自动带,无需手动
+2. **API key (PAT)** — `Authorization: Bearer plain_pk_xxx`(给 CLI / 第三方集成)
+
+PAT 在 [inplain.app/account](https://inplain.app/account) → API Keys 创建。
+
+## 主要端点
+
+| Endpoint | 用途 | Auth |
+| --- | --- | --- |
+| `POST /api/agent` | 自然语言 → deck/doc/sheet,流式 NDJSON | ✓ |
+| `POST /api/agent/demo` | 公开 demo(landing 用),5/天/IP 限流 | — |
+| `POST /api/render` | 任意 source → HTML | — |
+| `POST /api/export` | source → .pptx/.docx/.xlsx/.pdf | ✓ |
+| `GET/POST /api/workspace/documents` | CRUD documents | ✓ |
+| `POST /api/brands` | 上传 .pptx 模板 | ✓ |
+| `POST /api/brands/[id]/generate` | 用 brand 模板生成单份 deck | ✓ |
+| `POST /api/brands/[id]/batch` | 批量生成 N 份 → zip | ✓ |
+| `POST /api/showcase/fork` | 把 showcase demo 复制到自己工作区 | ✓ |
+| `POST /api/onboarding/seed` | 现场为新用户生成三件套 | ✓ |
+| `POST /api/onboarding/reset` | 清空工作区 + 重弹 welcome | ✓ |
+
+## Errors
+
+```json
+{ "error": "rate_limit_minute", "message": "请稍等一分钟再试" }
+```
+
+| HTTP | error code | 含义 |
+| --- | --- | --- |
+| 400 | `invalid_json` / `prompt_too_short` | 请求参数不合法 |
+| 401 | `unauthorized` | 没带 cookie 或 PAT |
+| 413 | `prompt_too_long` / `file_too_large` | 超长 |
+| 429 | `rate_limit_minute` / `rate_limit_day` | 触发限流 |
+| 5xx | `internal_error` | 我们的锅,带 trace 联系我们 |
+
+## 详细 endpoint 文档
+
+继续看:
+- [Auth](/api/auth)
+- [Agent](/api/agent)
+- [Render](/api/render)
+- [Export](/api/export)

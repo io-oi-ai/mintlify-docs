@@ -1,94 +1,180 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "theme": "luma",
-  "name": "Io Ai",
+  "theme": "maple",
+  "name": "Plain",
+  "description": "AI 时代的 Office. The Office for the AI era.",
   "colors": {
-    "primary": "#24242c",
-    "light": "#74747c",
-    "dark": "#e7ecf2"
+    "primary": "#C8102E",
+    "light": "#E63951",
+    "dark": "#A20A24"
   },
-  "favicon": "https://media.brand.dev/eca9251c-0e77-423c-bd29-24954284f0cf.jpg",
-  "logo": {
-    "light": "https://media.brand.dev/44b5885c-8c39-4c92-96e8-b568207b7348.svg",
-    "dark": "https://media.brand.dev/44b5885c-8c39-4c92-96e8-b568207b7348.svg"
-  },
-  "navbar": {
-    "links": [
-      {
-        "label": "Support",
-        "href": "mailto:support@io-oi.ai"
-      }
-    ],
-    "primary": {
-      "type": "github",
-      "href": "https://github.com/io-oi-ai/plain-docs"
-    }
-  },
+  "favicon": "/favicon.svg",
   "navigation": {
     "tabs": [
       {
-        "tab": "Documentation",
+        "tab": "Guides",
         "groups": [
           {
-            "group": "Get Started",
+            "group": "Welcome",
             "pages": [
-              "introduction",
+              "index",
               "quickstart",
-              "concepts"
+              "concepts/why-text-html"
             ]
           },
           {
-            "group": "Guides",
+            "group": "Three forms",
             "pages": [
-              "guides/creating-docs",
-              "guides/ai-writing",
-              "guides/publishing",
-              "guides/collaboration"
+              "forms/deck",
+              "forms/doc",
+              "forms/sheet"
             ]
           },
           {
-            "group": "Configuration",
+            "group": "Workflow",
             "pages": [
-              "configuration/settings",
-              "configuration/integrations",
-              "configuration/custom-domain"
+              "workflow/inspect-mode",
+              "workflow/cross-doc-refs",
+              "workflow/share-and-export",
+              "workflow/present-mode"
             ]
           },
           {
-            "group": "Help",
+            "group": "Brand templates",
             "pages": [
-              "troubleshooting",
-              "faq"
+              "brand/upload",
+              "brand/batch-generate"
+            ]
+          },
+          {
+            "group": "AI agents",
+            "pages": [
+              "ai/mcp",
+              "ai/cli-from-cursor",
+              "ai/cli-from-claude-code"
             ]
           }
         ]
       },
       {
-        "tab": "API Reference",
+        "tab": "CLI",
         "groups": [
           {
-            "group": "Overview",
+            "group": "Command line",
             "pages": [
-              "api-reference/introduction",
-              "api-reference/authentication"
+              "cli/install",
+              "cli/commands",
+              "cli/byok"
             ]
-          },
+          }
+        ]
+      },
+      {
+        "tab": "API",
+        "groups": [
           {
-            "group": "Endpoints",
+            "group": "Reference",
             "pages": [
-              "api-reference/documents",
-              "api-reference/projects",
-              "api-reference/publishing",
-              "api-reference/webhooks"
+              "api/overview",
+              "api/auth",
+              "api/agent",
+              "api/render",
+              "api/export"
             ]
           }
         ]
       }
+    ],
+    "global": {
+      "anchors": [
+        {
+          "anchor": "Showcase",
+          "href": "https://inplain.app/showcase",
+          "icon": "sparkles"
+        },
+        {
+          "anchor": "Pricing",
+          "href": "https://inplain.app/pricing",
+          "icon": "credit-card"
+        },
+        {
+          "anchor": "Changelog",
+          "href": "https://inplain.app/changelog",
+          "icon": "newspaper"
+        },
+        {
+          "anchor": "GitHub",
+          "href": "https://github.com/io-oi-ai/Plain",
+          "icon": "github"
+        }
+      ]
+    }
+  },
+  "logo": {
+    "light": "/logo/light.svg",
+    "dark": "/logo/dark.svg"
+  },
+  "appearance": {
+    "default": "light"
+  },
+  "navbar": {
+    "links": [
+      {
+        "label": "Workspace",
+        "href": "https://inplain.app/app"
+      },
+      {
+        "label": "Support",
+        "href": "mailto:hi@inplain.app"
+      }
+    ],
+    "primary": {
+      "type": "button",
+      "label": "Try Plain",
+      "href": "https://inplain.app"
+    }
+  },
+  "contextual": {
+    "options": [
+      "copy",
+      "view",
+      "chatgpt",
+      "claude",
+      "perplexity",
+      "mcp",
+      "cursor",
+      "vscode"
     ]
+  },
+  "seo": {
+    "metatags": {
+      "og:image": "https://inplain.app/opengraph-image",
+      "twitter:site": "@_zephyr_dev"
+    }
   },
   "footer": {
     "socials": {
-      "github": "https://github.com/io-oi-ai"
-    }
+      "x": "https://x.com/_zephyr_dev",
+      "github": "https://github.com/io-oi-ai/Plain"
+    },
+    "links": [
+      {
+        "header": "Plain",
+        "items": [
+          { "label": "Workspace", "href": "https://inplain.app/app" },
+          { "label": "Showcase", "href": "https://inplain.app/showcase" },
+          { "label": "Pricing", "href": "https://inplain.app/pricing" },
+          { "label": "Changelog", "href": "https://inplain.app/changelog" }
+        ]
+      },
+      {
+        "header": "Resources",
+        "items": [
+          { "label": "Manifesto", "href": "https://inplain.app/manifesto" },
+          { "label": "Blog", "href": "https://inplain.app/blog" },
+          { "label": "About", "href": "https://inplain.app/about" }
+        ]
+      }
+    ]
   }
 }

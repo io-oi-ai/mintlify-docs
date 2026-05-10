@@ -1,0 +1,54 @@
+---
+title: "Render"
+description: "Source → HTML,无需登录。"
+icon: "image"
+---
+
+把任意 Plain source 渲染成完整 HTML。同 pipeline 给工作台预览 / 演讲模式 / 分享页用。
+
+## Request
+
+```http
+POST /api/render
+Content-Type: application/json
+
+{
+  "kind": "deck",
+  "source": "---\nmarp: true\n...",
+  "workspace": [],
+  "themeOverride": "plain-mono",
+  "customTokens": null,
+  "animate": true,
+  "readOnly": true
+}
+```
+
+| Field | 含义 |
+| --- | --- |
+| `kind` | "deck" \| "doc" \| "sheet" |
+| `source` | 完整源码 |
+| `workspace` | 跨文档 @ref 解析上下文 |
+| `themeOverride` | 强制主题(忽略 frontmatter) |
+| `customTokens` | direction-picker 用的临时 ThemeTokens |
+| `animate` | 是否注入入场动画 |
+| `readOnly` | true = 不注入 visual-edit 交互脚本 |
+
+## Response
+
+`Content-Type: text/html` — 完整 HTML 文档(自包含 CSS/JS,可直接 iframe srcdoc)。
+
+## 用例
+
+```js
+const res = await fetch('https://inplain.app/api/render', {
+  method: 'POST',
+  headers: { 'content-type': 'application/json' },
+  body: JSON.stringify({ kind: 'deck', source, readOnly: true }),
+});
+const html = await res.text();
+iframe.srcdoc = html;
+```
+
+公开端点,**不需要 auth**。这是为什么 `/showcase` 能给所有人渲染 demo,
+也是为什么 trq212 思路的"自包含 .html 文件"在 Plain 里更轻 ——
+你不需要导出 HTML 文件,直接 POST source 拿 HTML。

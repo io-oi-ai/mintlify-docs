@@ -1,0 +1,57 @@
+---
+title: "Why text source, HTML render"
+description: "Plain 的 thesis,5 分钟读懂。"
+icon: "lightbulb"
+---
+
+## TL;DR
+
+> Markdown 不够丰富,HTML 不该是源 — Plain 在两者之间的甜蜜点。
+
+- **源是 Markdown / CSV** — diff 给 git,改给 AI,1 行变更就是 1 行 diff
+- **渲染是 HTML** — 浏览器开,链接发,客户的 Mac 和 AI 同事都能开
+- **导出是 .pptx / .docx / .xlsx** — 老式系统兜底,免费
+
+## 为什么
+
+### .pptx 是 1995 年的硬盘约束
+
+二进制是当年磁盘空间紧张的妥协。今天 AI 读不动、链接打不开、版本不能回滚 —
+都是当年妥协的副作用,不是定律。
+
+### Markdown 不够
+
+trq212 的 [HTML's Unreasonable Effectiveness](https://x.com/trq212/status/2052809885763747935)
+拿了 5.4M views,我们同意他的核心观察:Markdown 表达力撑不住 agent 写出的复杂内容。
+
+### 但 HTML 不该是源
+
+trq212 自己列的痛点:
+- HTML diff 噪声大,reviewer 看 240 行变更找不到真改
+- 没法版本管理(没有人对 HTML 做 git review)
+- 二次编辑得"理解"整个文档,AI 改一处会动十处
+
+Plain 的解:**源仍是文本,渲染才是 HTML**。
+两者都拿,对应的两类工作流都顺。
+
+## 类比
+
+```
+软件工程     Plain
+源码         Markdown / CSV
+编译产物     HTML / PPTX
+git diff     git diff(对源)
+浏览器       浏览器(对渲染)
+```
+
+源不是给人最终看的,源是给"改"和"diff"看的。
+渲染不是给"改"看的,渲染是给"读"和"分享"看的。
+两件事是不同的人做的(或同一人在不同时间做的),把它们分开是基本工程纪律。
+
+## 完整 essay
+
+我们写过一篇长版,带 trq212 antithesis 的全部论证:
+
+<Card title="HTML 该读,不该是源" icon="newspaper" href="https://inplain.app/blog/html-not-source">
+  Plain Blog · 6 min
+</Card>

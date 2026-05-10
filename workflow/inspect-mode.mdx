@@ -1,0 +1,42 @@
+---
+title: "Inspect mode · 设计模式"
+description: "Cursor 风的「选元素直接调」。"
+icon: "cursor"
+---
+
+按 `⌘I`(或工具栏"设计"按钮)进入 inspect mode。
+
+## 怎么用
+
+<Steps>
+  <Step title="开 inspect">
+    iframe 内 hover 时元素会用红色高亮,鼠标变 crosshair。
+  </Step>
+  <Step title="单击任意元素">
+    Slide / block / cell 都可点。元素旁边浮出 InspectorPanel。
+  </Step>
+  <Step title="改属性">
+    按元素 kind 不同,面板控件不同(见下表)。
+  </Step>
+  <Step title="改完关闭">
+    `ESC` 或 `⌘I` 退出。改动直接写回源,chat 历史里有 entry,可 Undo。
+  </Step>
+</Steps>
+
+## 不同元素的可调项
+
+| Element | 控件 |
+| --- | --- |
+| Slide(整页) | Layout picker(30+ 项,5 组)/ Tone swatch / Chrome 文本框 |
+| Doc block | 类型切换(paragraph/heading/list/quote/code)+ heading level H1-H4 |
+| Sheet cell | textarea + row/col 显示 |
+| 任意可编辑文本 | Inline edit |
+| 通用 | "让 AI 改" 自然语言通道(转给 chat 流) |
+
+## 跟 chat 的关系
+
+Inspect 改属性 = 一次"direct patch",不经 AI,但写一笔 chat history
+(rationale + patch + sourceBefore),让 Undo / Timeline 都能正确处理。
+
+要想"让 AI 帮我改这个元素"?Inspector 底部 **Ask AI** 输框 →
+带着选中元素的上下文一起发到 chat 流。

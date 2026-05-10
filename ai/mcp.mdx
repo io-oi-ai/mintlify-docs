@@ -1,0 +1,60 @@
+---
+title: "MCP server"
+description: "让 Claude Code / Cursor / Codex 把 Plain 当成「做文档的工具」"
+icon: "plug"
+---
+
+## 起 server
+
+```bash
+plain mcp
+```
+
+stdio MCP server,绑标准输入输出,无需端口。
+
+## 在 Claude Code 注册
+
+`~/.config/claude/mcp_servers.json`(macOS / Linux):
+
+```json
+{
+  "mcpServers": {
+    "plain": {
+      "command": "pnpm",
+      "args": ["dlx", "@plain/cli", "mcp"]
+    }
+  }
+}
+```
+
+重启 Claude Code,工具栏看到 `plain` server 上线。
+
+## 暴露的 tools
+
+| Tool | 用途 |
+| --- | --- |
+| `plain_deck_generate` | 生成 deck,返回 marp 源 |
+| `plain_doc_generate` | 生成 markdown doc |
+| `plain_sheet_generate` | 生成 sheet |
+| `plain_deck_edit` | 改现有 deck(带原 source + 指令) |
+| `plain_doc_edit` | 改现有 doc |
+| `plain_sheet_edit` | 改现有 sheet |
+| `plain_export` | 把任意源 → .pptx / .docx / .xlsx / .pdf |
+| `plain_render` | 任意源 → HTML(给 agent 看的中间渲染) |
+
+## 使用 pattern
+
+让 Claude Code 在你的 repo 里自动产文档:
+
+```
+你: 调研一下 src/payments,产一份 8 页 deck 给我老板看。
+
+Claude Code:
+  → 读 src/payments/* 文件
+  → 调 plain_deck_generate 用调研结果当 prompt
+  → 调 plain_export 输出 .pptx
+  → 把文件路径返给你
+```
+
+Plain 在 agent workflow 里就是"输出 deliverable 的最后一步" ——
+agent 想清楚 + Plain 做出来。

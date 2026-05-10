@@ -1,0 +1,57 @@
+---
+title: "Auth"
+description: "Better Auth + magic link / Google OAuth + PAT。"
+icon: "key"
+---
+
+Plain 的 auth 走 [Better Auth](https://better-auth.com),session 存 cookie(httpOnly)。
+
+## Magic link
+
+```http
+POST /api/auth/sign-in/magic-link
+Content-Type: application/json
+
+{
+  "email": "you@example.com",
+  "callbackURL": "/app"
+}
+```
+
+返回 `{ "status": true }` 表示邮件已发出(`from: noreply@inplain.app`)。
+邮件里的链接 5 分钟内有效,点开自动登录 + 跳 callbackURL。
+
+## Google OAuth
+
+浏览器 navigate 到:
+
+```
+GET /api/auth/sign-in/social?provider=google&callbackURL=/app
+```
+
+Plain 服务端走 OAuth dance 后写 cookie 跳 callback。
+
+## Get session
+
+```http
+GET /api/auth/get-session
+```
+
+返回当前 session 用户 + 过期时间,无 session 返 `null`。
+
+## Sign out
+
+```http
+POST /api/auth/sign-out
+```
+
+## PAT(给 CLI / 自动化)
+
+[inplain.app/account](https://inplain.app/account) → API Keys → Create。
+
+```http
+GET /api/workspace/documents
+Authorization: Bearer plain_pk_xxx
+```
+
+PAT 不会过期,要吊销在同一页面 Revoke。

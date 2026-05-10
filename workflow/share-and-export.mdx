@@ -1,0 +1,49 @@
+---
+title: "Share + Export"
+description: "发链接,不发文件。但一键导出永远免费。"
+icon: "share-nodes"
+---
+
+## 发链接(默认动作)
+
+工作台 ⌘K → "生成分享链接" → 短链 `https://inplain.app/s/abc7`。
+
+链接特性:
+- **无需登录**就能看
+- **mobile-friendly** —— 手机点开就是杂志风视觉
+- **访客评论** —— 不登录留 name + body,频率限流
+- **owner 可隐藏评论** —— 工作台收件箱 ⌘K → "评论"
+- **永远是当前版本** —— 改源,链接打开就是新的
+
+## 导出文件(老式系统兜底)
+
+我们坚持文件永远免费导出 ——
+**Plain 的钱来自 AI 算力,不是导出锁定**。
+
+| Kind | 格式 |
+| --- | --- |
+| Deck | `.pptx` `.pdf` |
+| Doc | `.docx` `.pdf` |
+| Sheet | `.xlsx` `.pdf` |
+
+工作台 ⌘E 默认格式;命令面板搜 "导出" 选其他。
+
+CLI:
+
+```bash
+plain export deck.md --to=pptx
+plain export memo.md --to=docx
+plain export sheet.md --to=xlsx
+```
+
+## 导出保真
+
+- `.pptx` 走 `python-pptx` schema(PowerPoint / Keynote / WPS 都能开)
+- `.xlsx` 公式列转成真正的 Excel 公式(不是 baked 计算结果)
+- `.pdf` 走浏览器打印 pipeline,字体保真
+
+## 高度设计稿场景
+
+如果你要的视觉是公司 PPT 母版那种(自定义形状、特殊配图),
+普通 marp 主题做不到。用 [Brand 模板](/brand/upload) 上传公司样板,
+导出时直接套用样板版式。

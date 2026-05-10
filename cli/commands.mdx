@@ -1,0 +1,77 @@
+---
+title: "Commands"
+description: "完整命令树。"
+icon: "terminal"
+---
+
+```
+plain deck   generate | edit                PPT
+plain doc    generate | edit                Word
+plain sheet  generate | edit                Excel
+plain export <file> --to=pptx|docx|xlsx|pdf 导出
+plain mcp                                   stdio MCP server(给 agent 用)
+plain login  [--api-key <pat>]              保存 gateway 凭证
+plain config                                查看当前配置
+plain logout                                清除 api key
+```
+
+## generate
+
+```bash
+plain deck generate "为投资人讲清楚 Q3 增长的 8 页 deck"
+```
+
+stdout 是 marp markdown 源。`> deck.md` 重定向。
+
+可选 flags:
+- `--mode=brief|feature` — brief = 8-12 页(默认),feature = 18-28 页 Monocle 风长文
+- `--theme=plain-mono|plain-bold|plain-editorial|...` — 主题
+- `--output=deck.md` — 直接写文件不打 stdout
+- `--json` — 输出包含 source + metadata 的 JSON,给脚本用
+
+## edit
+
+```bash
+plain deck edit deck.md "把第 3 页改成 hero-dark + 加一句结语"
+```
+
+读 deck.md 为 current,把指令送给 editor agent,新 source 写回(或 `--output=new.md` 不覆盖)。
+
+## export
+
+```bash
+plain export deck.md --to=pptx --output=deck.pptx
+plain export memo.md --to=docx
+plain export sheet.md --to=xlsx
+plain export anything.md --to=pdf
+```
+
+不指定 `--output` 自动用 `<basename>.<ext>`。
+
+## mcp
+
+```bash
+plain mcp
+```
+
+stdio MCP server,详见 [MCP server](/ai/mcp)。
+
+## CI 范例
+
+```yaml .github/workflows/release-deck.yml
+on:
+  push:
+    tags: ['v*']
+jobs:
+  release-deck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: pnpm dlx @plain/cli login --api-key ${{ secrets.PLAIN_PAT }}
+      - run: |
+          plain deck generate "Release ${{ github.ref_name }} 的 6 页对外 deck" \
+            --output=release.md
+          plain export release.md --to=pptx --output=release.pptx
+      - uses: actions/upload-artifact@v4
+        with: { path: release.pptx }
+```

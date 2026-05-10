@@ -1,0 +1,63 @@
+---
+title: "Doc"
+description: "GFM Markdown + 数学公式 + TOC + 表格嵌入 + 杂志风长文。"
+icon: "file-lines"
+---
+
+Plain 的 doc 是标准 GFM Markdown,经 unified pipeline 渲染:
+`remark-parse + remark-gfm + remark-math + rehype-katex + rehype-slug + rehype-toc`。
+
+## 一份最小 doc
+
+```markdown memo.md
+---
+title: Q3 战略复盘
+---
+
+# Q3 战略复盘
+
+本季度核心命题是从「做得快」转向「想得清」。
+
+> 速度已经不是瓶颈,判断才是。
+
+## 接下来三件事
+
+1. 收紧产品线
+2. 重定核心客户画像
+3. ⋯
+
+## 数据来源
+
+留存数字见 @sheet:abc-customers:col:percentage,
+全部分析方法见 @doc:def-method 第二节。
+```
+
+## 支持的 markdown 扩展
+
+- **GFM tables** — 标准 markdown 表格
+- **Math** — `$inline$` 和 `$$block$$`(KaTeX)
+- **Footnotes** — `[^1]` 行内脚注
+- **TOC** — frontmatter 加 `toc: true` 自动生成目录
+- **Code highlighting** — 语言 fence 自动着色
+- **`@ref` 跨文档引用** — 指任意 sheet/doc/deck 段落
+
+## 嵌入 sheet 表格
+
+```markdown
+[sheet:customers] columns=name,retention limit=5
+```
+
+渲染时把 sheet `customers` 的前 5 行 name + retention 列嵌进来,
+sheet 改了,doc 下次刷新自动是新的。详见 [Cross-doc refs](/workflow/cross-doc-refs)。
+
+## 演讲模式(scroll-driven)
+
+doc 也能 present —— 按 `H2` 自然分段,Space / ↓ 翻段,
+F 全屏。给"长 memo + 现场 walk-through"场景用。详见 [Present mode](/workflow/present-mode)。
+
+## 导出
+
+```bash
+plain export memo.md --to=docx   # 给 Word
+plain export memo.md --to=pdf    # 给打印
+```

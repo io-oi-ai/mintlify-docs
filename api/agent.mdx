@@ -1,0 +1,65 @@
+---
+title: "Agent"
+description: "自然语言 → deck/doc/sheet,流式 NDJSON。"
+icon: "wand-magic-sparkles"
+---
+
+最重要的端点。一条 prompt 进,流式 events 出,最后一个 `doc` event 带完整 source。
+
+## Request
+
+```http
+POST /api/agent
+Content-Type: application/json
+Authorization: Bearer plain_pk_xxx (或 cookie session)
+
+{
+  "prompt": "为投资人讲清楚 Q3 增长的 8 页 deck",
+  "kind": "deck",
+  "current": null,
+  "workspace": [],
+  "history": [],
+  "mode": "brief"
+}
+```
+
+| Field | Type | 含义 |
+| --- | --- | --- |
+| `prompt` | string | 必填,自然语言指令 |
+| `kind` | "deck" \| "doc" \| "sheet" | 当前 tab 类型;不传由 router 判断 |
+| `current` | string | 当前 source(若是 edit 操作) |
+| `workspace` | array | 跨文档引用上下文(@ref 用) |
+| `history` | array | 最近 N 轮对话(让"再短点"等指令有上下文) |
+| `mode` | "brief" \| "feature" | brief=8-12 页、feature=18-28 页长文 |
+
+## Response
+
+`Content-Type: application/x-ndjson` — 一行一个 event:
+
+```jsonl
+{"type":"phase","phase":"routing"}
+{"type":"intent","intent":{"action":"generate","target":"deck"}}
+{"type":"phase","phase":"generating"}
+{"type":"reasoning","source":"slide","text":"第 1 页:封面"}
+{"type":"reasoning","source":"slide","text":"第 2 页:hero question"}
+{"type":"doc","kind":"deck","source":"---\nmarp:true\n...","doc":{...}}
+{"type":"phase","phase":"done"}
+```
+
+| Event | 含义 |
+| --- | --- |
+| `phase` | 状态切换 |
+| `intent` | router 判断的 action + target |
+| `reasoning` | 边写边给的过程文字(可选展示) |
+| `delta` | 中间 partial JSON(给 progressive UI) |
+| `patch` | 编辑模式产出 JSON Patch 操作 |
+| `doc` | 最终完整 source + parsed doc |
+| `error` | `{ code, message }`,流终止 |
+
+## Demo 端点(公开,限流)
+
+`POST /api/agent/demo` — 同样 schema 但:
+- 无需 auth
+- 5 / 24h / IP 限流
+- 仅 generate(不接 current/edit)
+- prompt 上限 200 字

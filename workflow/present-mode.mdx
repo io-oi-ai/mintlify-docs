@@ -1,0 +1,42 @@
+---
+title: "演讲模式"
+description: "F5 全屏 + 翻页笔 + speaker notes,deck 翻页 / doc 滚动两种。"
+icon: "presentation-screen"
+---
+
+## Deck 演讲(翻页式)
+
+`⌘P` 或命令面板搜 "演讲" 进入。
+
+| 键 | 动作 |
+| --- | --- |
+| `→` `↓` `Space` `PgDn` | 下一页 |
+| `←` `↑` `PgUp` | 上一页 |
+| `F` | Fullscreen toggle |
+| `F5` | 从头 + Fullscreen |
+| `Home` `End` | 第一页 / 最后一页 |
+| `B` `.` | 黑屏 toggle |
+| `S` | Speaker notes 浮窗 |
+| `ESC` | Overview grid(全部缩略,可点选页) |
+
+## Doc 演讲(滚动驱动)
+
+doc 没有"页",改成按 H2 自然分段:
+
+| 键 | 动作 |
+| --- | --- |
+| `Space` `↓` `Enter` | 下一段(平滑滚) |
+| `↑` `Backspace` | 上一段 |
+| `F` | Fullscreen |
+| `F5` | 从头 |
+| `ESC` | 退出 fullscreen |
+
+当前段 opacity:1,其他段 0.32 — 自动聚焦。
+
+## 内容 = 编辑器
+
+演讲页用 **同一份 `/api/render` pipeline**,所以:
+- 30+ rich layouts 完整渲染
+- 主题 / 字体 / 颜色 跟编辑器看到的一致
+- 数学公式 / mermaid / SVG charts 都正常
+- DECK_ANIM_SCRIPT 入场动画自动触发

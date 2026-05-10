@@ -1,0 +1,44 @@
+---
+title: "批量生成 N 份"
+description: "12 个主题 → zip 打包下载。"
+icon: "layer-group"
+---
+
+## 流程
+
+<Steps>
+  <Step title="选 brand">
+    左侧 brand 列表点选要用的样板。
+  </Step>
+  <Step title="加主题行">
+    每行一个主题,可指定页数 + 附加要求(如:tone / 重点章节 / 受众)。
+    "+ 加一行" 加更多,最多 12 个。
+  </Step>
+  <Step title="批量生成 → zip">
+    点主按钮。AI 顺序跑(不并发,避免 LLM rate)~30s 一份,完成后浏览器自动下载 zip:
+
+    ```
+    plain-batch-3a92be08.zip
+    ├ 01-Q3-投资人-pitch.pptx
+    ├ 02-客户案例-X-公司.pptx
+    ├ ...
+    ├ README.txt(汇总清单)
+    └ errors.txt(若有失败 topic 列在这里)
+    ```
+  </Step>
+</Steps>
+
+## 失败容错
+
+某条 topic AI 失败不阻塞其它:
+- 成功的入 zip + 写一份 doc 到工作区留档
+- 失败的写到 zip 内 `errors.txt`,带具体错误消息
+- 整批失败 → 返回 JSON 错误而非空 zip
+
+## 时间预算
+
+- 单份 ~30-60s(AI generate + JSZip 编辑)
+- 12 份 ~6-12 min(顺序跑)
+- 5 分钟 timeout 上限,所以建议**单批 ≤ 8 个主题**
+
+要批量超过 12 个?分批跑就行。后续可能加异步队列。

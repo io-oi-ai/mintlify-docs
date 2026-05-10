@@ -1,0 +1,51 @@
+---
+title: "改一处,三处同步 · @ref"
+description: "Plain 最重要的一个动作:任何文档引另一个文档的一段/一列,改一次全网刷新。"
+icon: "link"
+---
+
+## 痛点
+
+> 客户问的那个数字变了。我要在 deck / 报告 / Excel 里同时改三遍,经常漏。
+
+— B2B 销售总监,2026 Q1 用户访谈第 14 位
+
+## 解法:`@ref`
+
+```markdown
+本季度留存 @sheet:retention:col:percentage:avg —— 见详细 @doc:method 的方法论。
+```
+
+渲染时这一行被替换成:
+
+> 本季度留存 73% — 见详细 [Q3 留存模型方法论](#) 的方法论。
+
+sheet 改一个数,deck/doc 下次刷新自动是新的。
+
+## 语法
+
+| Pattern | 含义 |
+| --- | --- |
+| `@deck:abc` | 指 deck `abc` 的 cover |
+| `@deck:abc:s3` | 指 deck `abc` 第 3 张 slide |
+| `@doc:def` | 指 doc `def` 的 H1 |
+| `@doc:def:b5` | 指 doc `def` 的第 5 个 block |
+| `@sheet:xyz` | 整个 sheet 嵌入(默认前 5 行) |
+| `@sheet:xyz:col:percentage` | 仅 percentage 列 |
+| `@sheet:xyz:col:percentage:avg` | percentage 列平均值 |
+| `@sheet:xyz:col:percentage:sum` | sum / max / min / count 都行 |
+
+## sheet 块嵌入
+
+```markdown
+[sheet:customers] columns=name,retention limit=10
+```
+
+整张表渲染成 markdown table。
+
+## 工作台体感
+
+- 编辑器右侧 sidebar 显示当前 doc 的所有 outgoing refs
+- ⌘K 命令面板搜 "Backlinks" 显示哪些 doc 在引当前
+- 任意 ref 旁有 `↗` icon 跳到目标
+- 渲染失效(目标删了 / col 改名)→ stale banner 顶部提醒

@@ -1,0 +1,62 @@
+---
+title: "在 Claude Code 里调 Plain"
+description: "Anthropic 自家 agent + Plain 是天然组合 — Plain 思路最初就是从 Claude Code workflow 提炼出来的。"
+icon: "robot"
+---
+
+## 推荐:MCP 模式
+
+详见 [MCP server](/ai/mcp)。一次性配好 `mcp_servers.json`,
+之后所有 session 自动有 Plain tools。
+
+## CLI 模式(轻量)
+
+如果项目不复杂,Claude Code 直接 spawn `plain` 进程也行:
+
+```bash
+claude
+> 给这个 PR 写一份 6 页 deck 给团队 review
+
+# Claude Code 会自动:
+# 1. git log + git diff 读 PR
+# 2. 调 `plain deck generate "PR #482 ..."`
+# 3. 调 `plain export deck.md --to=pptx`
+# 4. 报告 .pptx 路径
+```
+
+## Workflow 的两种位置
+
+**1. Plan 阶段 — 让 Plain 当 sketch 工具**
+
+```
+> 我想做支付重构,先帮我画一个 6 页设计 deck 让我跟老板对齐
+
+Claude:
+  → plain deck generate "支付重构方案,四种取舍,推荐方案 + 风险"
+  → 把 deck 给你 review
+  → 你 chat 改 → 改了再 export
+
+→ 一份能交付的设计文档,不是 markdown plan
+```
+
+**2. Ship 阶段 — 让 Plain 当 release 文档**
+
+```
+> 这次 release 写一份给所有 stakeholder 的总结
+
+Claude:
+  → 读 git log range + Linear ticket
+  → plain doc generate "Release notes"
+  → 同时 plain sheet generate "metrics 对比"
+  → 都 @ref 互链
+  → 一个 inplain.app/s/abc 链接发给所有人
+```
+
+## Plain 的 thesis 来自这
+
+Anthropic 的 [Thariq](https://x.com/trq212/status/2052809885763747935) 写过:
+
+> Markdown 已成 agent 与人沟通的主流格式,但越来越不够。HTML 才是终态。
+
+Plain 早一步走到了"源是 markdown,渲染是 HTML"。
+你在 Claude Code 里用 Plain,就是站在两边的甜蜜点上。

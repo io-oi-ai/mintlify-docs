@@ -1,0 +1,8 @@
+<svg width="120" height="32" viewBox="0 0 120 32" xmlns="http://www.w3.org/2000/svg">
+  <!-- Plain glyph: O ring + 印刷红方块 -->
+  <circle cx="16" cy="16" r="11.5" fill="none" stroke="#1A1A1A" stroke-width="2.5"/>
+  <rect x="12.25" y="12.25" width="7.5" height="7.5" fill="#C8102E"/>
+  <!-- Wordmark: Plain. -->
+  <text x="38" y="22" font-family="Newsreader, Georgia, serif" font-size="20" font-weight="500" fill="#1A1A1A" letter-spacing="-0.01em">Plain</text>
+  <text x="86" y="22" font-family="Newsreader, Georgia, serif" font-size="20" font-weight="500" fill="#C8102E">.</text>
+</svg>

@@ -1,61 +1,73 @@
 ---
-title: "Io Ai docs: write, publish, and manage your docs with AI"
-description: "Io Ai helps you create, manage, and publish clear documentation using AI. Write better docs faster, collaborate with your team, and publish with one click."
+title: "Plain · Documentation"
+description: "AI 时代的 Office:文本是源,HTML 是脸,链接是交付。"
+icon: "star"
 ---
 
-Io Ai is an AI-powered documentation platform that helps you write plain-language docs your users will actually understand. Whether you're starting from scratch or improving existing content, Io Ai's writing assistant, publishing tools, and collaboration features keep your documentation accurate and up to date.
+Plain 是 AI 时代的 Office 工作台。
+**源是 Markdown / CSV**(diff 给 git,改给 AI),
+**渲染是 HTML**(读给人,链接给客户),
+**导出是 .pptx / .docx / .xlsx**(给老式系统兜底)。
+
+<Tip>
+  急的话: 直接到 [inplain.app](https://inplain.app) 输一句话生成,
+  30 秒就能看到一份完整 deck/doc/sheet。文档可以之后再读。
+</Tip>
+
+## 五分钟内能做的事
 
 <CardGroup cols={2}>
-  <Card title="Quick Start" icon="bolt" href="/quickstart">
-    Create your first document and publish it in under five minutes.
+  <Card title="生成第一份" icon="rocket" href="/quickstart">
+    一句话 → deck/doc/sheet 三件套,带 @ref 互链。
   </Card>
-  <Card title="Core Concepts" icon="book" href="/concepts">
-    Understand projects, documents, and the Io Ai publishing model.
+  <Card title="为什么不用 PPT" icon="lightbulb" href="/concepts/why-text-html">
+    文本是源,HTML 是脸 — Plain 的 thesis。
   </Card>
-  <Card title="AI Writing" icon="wand-magic-sparkles" href="/guides/ai-writing">
-    Let Io Ai's AI assistant draft, rewrite, and improve your docs.
+  <Card title="上传公司 PPT 模板" icon="upload" href="/brand/upload">
+    高度设计稿场景:Plain 锁定样板,只让 AI 填字。
   </Card>
-  <Card title="API Reference" icon="code" href="/api-reference/introduction">
-    Integrate Io Ai into your workflow with the REST API.
+  <Card title="批量生成 N 份" icon="layer-group" href="/brand/batch-generate">
+    输入 N 个主题,一键导出 N 份 .pptx 打包成 zip。
   </Card>
 </CardGroup>
 
-## Get started in four steps
-
-<Steps>
-  <Step title="Create your account">
-    Sign up at [io-oi.ai](https://io-oi.ai) and create your first project. A project is the container for all your documentation.
-  </Step>
-  <Step title="Write your first document">
-    Open the editor, type your content, or paste in existing text. Use the AI assistant to refine the language and structure automatically.
-  </Step>
-  <Step title="Invite collaborators">
-    Add teammates to your project so they can review, comment on, and edit documents together in real time.
-  </Step>
-  <Step title="Publish">
-    Hit **Publish** to make your documentation live. Share the link or connect a custom domain from your project settings.
-  </Step>
-</Steps>
-
-## Key features
+## 三种形态
 
 <CardGroup cols={3}>
-  <Card title="AI Writing Assistant" icon="sparkles">
-    Draft and rewrite content in plain language with one click.
+  <Card title="Deck · 演示" icon="presentation-screen" href="/forms/deck">
+    Marp markdown + 30+ rich layouts + 主题切换
   </Card>
-  <Card title="Real-time Collaboration" icon="users">
-    Edit and review documents together with your team.
+  <Card title="Doc · 长文" icon="file-lines" href="/forms/doc">
+    GFM Markdown + 数学公式 + TOC + 表格嵌入
   </Card>
-  <Card title="Custom Domains" icon="globe">
-    Publish to your own domain and keep your brand front and center.
+  <Card title="Sheet · 数据" icon="table" href="/forms/sheet">
+    CSV 源 + ECharts SVG + 公式引擎
   </Card>
-  <Card title="Markdown & MDX" icon="file-code">
-    Write in Markdown or MDX with full component support.
+</CardGroup>
+
+## 给 agent 用 Plain
+
+Plain 一开始就是为"人 + AI agent 一起读写"设计的,所以有完整的 agent 通道:
+
+<CardGroup cols={2}>
+  <Card title="MCP server" icon="plug" href="/ai/mcp">
+    `plain mcp` 起 stdio,Claude Code / Cursor / Codex 自动识别。
   </Card>
-  <Card title="GitHub Integration" icon="github">
-    Sync your docs with a GitHub repository for version control.
+  <Card title="CLI" icon="terminal" href="/cli/install">
+    `pnpm dlx @plain/cli` 一句话生成,CI / 自动化友好。
   </Card>
-  <Card title="REST API" icon="plug">
-    Automate document creation and publishing via the REST API.
+</CardGroup>
+
+## 在哪能找到我们
+
+<CardGroup cols={3}>
+  <Card title="Workspace" icon="window" href="https://inplain.app/app">
+    inplain.app/app
+  </Card>
+  <Card title="Showcase" icon="sparkles" href="https://inplain.app/showcase">
+    9 份真实可 fork 的 demo
+  </Card>
+  <Card title="Email" icon="envelope" href="mailto:hi@inplain.app">
+    hi@inplain.app
   </Card>
 </CardGroup>

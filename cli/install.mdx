@@ -1,0 +1,49 @@
+---
+title: "Install"
+description: "pnpm dlx 一行装好,或者从 source 跑。"
+icon: "download"
+---
+
+## 一行装
+
+```bash
+pnpm dlx @plain/cli login
+```
+
+第一次跑会弹浏览器登录(走 inplain.app 的 magic link),
+拿到的 PAT 写入 `~/.config/plain/credentials.json`(0600 权限)。
+
+## 直接传 PAT
+
+```bash
+plain login --api-key plain_pk_xxx
+```
+
+PAT 在 [inplain.app/account](https://inplain.app/account) → API Keys 创建。
+
+## 从 source 跑
+
+```bash
+git clone https://github.com/io-oi-ai/Plain
+cd Plain
+pnpm install
+pnpm plain --help
+```
+
+## 登录确认
+
+```bash
+plain config
+# 输出:
+#   user: hi@inplain.app
+#   gateway: https://inplain.app/api/gateway
+#   default model: anthropic/claude-opus-4-7
+```
+
+## 退出
+
+```bash
+plain logout
+```
+
+清掉本地 PAT。服务端 PAT 还在,要彻底吊销去 inplain.app/account 删。
